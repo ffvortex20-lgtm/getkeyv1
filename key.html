@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Key</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VORTEX | Key System</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -103,7 +103,6 @@ body{
             rotateX(60deg)
             translateY(0);
     }
-
     to{
         transform:
             perspective(500px)
@@ -124,13 +123,8 @@ body{
 }
 
 @keyframes glowMove{
-    from{
-        transform:translate(-100px,-100px);
-    }
-
-    to{
-        transform:translate(300px,200px);
-    }
+    from{ transform:translate(-100px,-100px); }
+    to{ transform:translate(300px,200px); }
 }
 
 /* =========================
@@ -158,12 +152,8 @@ body{
         transform:translateY(110vh);
         opacity:0;
     }
-    15%{
-        opacity:.8;
-    }
-    85%{
-        opacity:.8;
-    }
+    15%{ opacity:.8; }
+    85%{ opacity:.8; }
     to{
         transform:translateY(-10vh);
         opacity:0;
@@ -205,15 +195,11 @@ body{
 @keyframes cardEnter{
     from{
         opacity:0;
-        transform:
-            translateY(30px)
-            scale(.94);
+        transform:translateY(30px) scale(.94);
     }
     to{
         opacity:1;
-        transform:
-            translateY(0)
-            scale(1);
+        transform:translateY(0) scale(1);
     }
 }
 
@@ -247,14 +233,8 @@ body{
 }
 
 @keyframes logoPulse{
-    0%,100%{
-        box-shadow:
-            0 0 25px rgba(255,23,68,.25);
-    }
-    50%{
-        box-shadow:
-            0 0 50px rgba(255,23,68,.55);
-    }
+    0%,100%{ box-shadow: 0 0 25px rgba(255,23,68,.25); }
+    50%{ box-shadow: 0 0 50px rgba(255,23,68,.55); }
 }
 
 /* =========================
@@ -341,7 +321,7 @@ body{
     border:1px dashed rgba(255,23,68,.55);
     color:#fff;
     font-family:monospace;
-    font-size:15px;
+    font-size:16px;
     letter-spacing:2px;
     word-break:break-all;
     margin-bottom:13px;
@@ -379,10 +359,7 @@ body{
 }
 
 @keyframes statusPulse{
-    50%{
-        opacity:.35;
-        transform:scale(.7);
-    }
+    50%{ opacity:.35; transform:scale(.7); }
 }
 
 /* =========================
@@ -393,7 +370,7 @@ body{
     position:relative;
     overflow:hidden;
     width:100%;
-    padding:15px;
+    padding:14px;
     border:none;
     border-radius:13px;
     cursor:pointer;
@@ -402,35 +379,25 @@ body{
     font-weight:800;
     letter-spacing:.6px;
     transition:.2s;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
 }
 
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.btn:active{
-    transform:scale(.97);
-}
+.btn:hover{ transform:translateY(-2px); }
+.btn:active{ transform:scale(.97); }
 
 /* copiar */
-
 .btn-copy{
-    background:
-        linear-gradient(
-            135deg,
-            #ff1744,
-            #d50036
-        );
+    background:linear-gradient(135deg, #ff1744, #d50036);
     box-shadow:0 8px 28px rgba(255,0,55,.25);
     margin-bottom:12px;
 }
+.btn-copy:hover{ box-shadow:0 12px 40px rgba(255,0,55,.4); }
 
-.btn-copy:hover{
-    box-shadow:0 12px 40px rgba(255,0,55,.4);
-}
-
-/* brilho */
-
+/* brilho nos botões */
 .btn::before{
     content:"";
     position:absolute;
@@ -438,43 +405,22 @@ body{
     left:-120%;
     width:60%;
     height:100%;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.25),
-            transparent
-        );
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
     transform:skewX(-20deg);
 }
+.btn:hover::before{ animation:shine .7s; }
+@keyframes shine{ to{ left:140%; } }
 
-.btn:hover::before{
-    animation:shine .7s;
-}
-
-@keyframes shine{
-    to{
-        left:140%;
-    }
-}
-
-/* =========================
-   CANAL & PRODUTOS VIP
-========================= */
-
+/* Botões Sociais / VIP */
 .channel-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    text-decoration:none;
     background:rgba(255,255,255,.025);
     border:1px solid rgba(255,23,68,.35);
     color:#fff;
     box-shadow:0 0 20px rgba(255,23,68,.05);
     margin-bottom:10px;
+    text-align:left;
+    padding:12px 14px;
 }
-
 .channel-btn:hover{
     border-color:#ff1744;
     background:rgba(255,23,68,.08);
@@ -482,145 +428,66 @@ body{
 }
 
 .btn-vip{
-    background: linear-gradient(135deg, rgba(255, 23, 68, 0.2), rgba(255, 0, 85, 0.3));
-    border: 1px solid #ff1744;
-    box-shadow: 0 0 20px rgba(255, 23, 68, 0.25);
+    border-color: rgba(255, 215, 0, 0.4);
+    background: rgba(255, 215, 0, 0.04);
 }
-
 .btn-vip:hover{
-    background: linear-gradient(135deg, #ff1744, #d50036);
-    box-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
+    border-color: #ffd700;
+    background: rgba(255, 215, 0, 0.12);
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.25);
 }
 
-.vip-icon{
-    width:27px;
-    height:27px;
+.icon-badge{
+    width:26px;
+    height:26px;
     border-radius:50%;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:#ff1744;
-    color:white;
     font-size:14px;
-    box-shadow:0 0 15px rgba(255,23,68,.4);
+    flex-shrink:0;
 }
-
-.whatsapp-icon{
-    width:27px;
-    height:27px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#25D366;
-    color:white;
-    font-size:15px;
-    box-shadow:0 0 15px rgba(37,211,102,.25);
-}
+.discord-bg{ background:#5865F2; box-shadow:0 0 12px rgba(88,101,242,0.4); }
+.whatsapp-bg{ background:#25D366; box-shadow:0 0 12px rgba(37,211,102,0.4); }
 
 .channel-text{
     display:flex;
     flex-direction:column;
     align-items:flex-start;
+    flex:1;
 }
-
-.channel-title{
-    font-size:11px;
-    font-weight:800;
-}
-
-.channel-subtitle{
-    margin-top:2px;
-    color:#777780;
-    font-size:9px;
-}
+.channel-title{ font-size:11px; font-weight:800; }
+.channel-subtitle{ margin-top:2px; color:#777780; font-size:9px; }
 
 /* =========================
-   INFO
+   INFO / VALIDADE
 ========================= */
 
 .info{
-    margin-top:20px;
-    padding-top:18px;
+    margin-top:16px;
+    padding-top:14px;
     border-top:1px solid rgba(255,255,255,.06);
     color:#777780;
     font-size:11px;
-    line-height:1.8;
+    line-height:1.7;
 }
-
-.info b{
-    color:#fff;
-}
-
-/* =========================
-   SUCESSO
-========================= */
+.info b{ color:#fff; }
 
 .success{
-    background:
-        linear-gradient(
-            135deg,
-            #00c853,
-            #00a844
-        ) !important;
+    background:linear-gradient(135deg, #00c853, #00a844) !important;
     box-shadow:0 8px 30px rgba(0,200,83,.3) !important;
 }
 
-/* =========================
-   MANUTENÇÃO
-========================= */
-
-.maintenance-icon{
-    width:70px;
-    height:70px;
-    margin:0 auto 18px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    background:rgba(255,23,68,.08);
-    border:1px solid rgba(255,23,68,.25);
-    animation:maintenance 2s infinite;
-}
-
-@keyframes maintenance{
-    0%,90%,100%{
-        transform:rotate(0);
-    }
-    93%{
-        transform:rotate(-5deg);
-    }
-    96%{
-        transform:rotate(5deg);
-    }
-}
-
-.hidden{
-    display:none !important;
-}
-
 @media(max-width:480px){
-    .card{
-        padding:26px 20px;
-    }
-    .title{
-        font-size:21px;
-    }
-    .key-box{
-        font-size:13px;
-    }
+    .card{ padding:26px 20px; }
+    .title{ font-size:21px; }
+    .key-box{ font-size:14px; }
 }
 </style>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
 </head>
 
 <body>
 
-<!-- Efeito de luz do mouse -->
 <div class="mouse-glow" id="mouseGlow"></div>
 
 <div class="background">
@@ -630,7 +497,7 @@ body{
 </div>
 
 <!-- TELA PRINCIPAL -->
-<div id="main-view" class="card">
+<div class="card">
     <div class="logo">
         VTX
     </div>
@@ -654,7 +521,7 @@ body{
     </div>
 
     <div class="key-box" id="key-display">
-        Carregando...
+        GERANDO...
     </div>
 
     <div class="status">
@@ -667,40 +534,24 @@ body{
         ⧉ &nbsp; COPIAR KEY
     </button>
 
-    <!-- PRODUTOS VIP -->
+    <!-- PRODUTOS VIP (DISCORD) -->
     <a class="btn channel-btn btn-vip" href="https://discord.gg/FEkBTeZ5j" target="_blank" rel="noopener noreferrer" onclick="sound('click')">
-        <span class="vip-icon">
-            👑
-        </span>
+        <span class="icon-badge discord-bg">🎮</span>
         <span class="channel-text">
-            <span class="channel-title">
-                PRODUTOS VIP
-            </span>
-            <span class="channel-subtitle">
-                Adquira acessos e recursos exclusivos
-            </span>
+            <span class="channel-title" style="color: #ffd700;">PRODUTOS VIP</span>
+            <span class="channel-subtitle">Adquira acessos e recursos exclusivos</span>
         </span>
-        <span style="margin-left:auto;font-size:18px;">
-            ›
-        </span>
+        <span style="margin-left:auto;font-size:16px;color:#ffd700;">›</span>
     </a>
 
-    <!-- CANAL -->
+    <!-- CANAL WHATSAPP -->
     <a class="btn channel-btn" href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" rel="noopener noreferrer" onclick="sound('click')">
-        <span class="whatsapp-icon">
-            💬
-        </span>
+        <span class="icon-badge whatsapp-bg">💬</span>
         <span class="channel-text">
-            <span class="channel-title">
-                CANAL DE ATUALIZAÇÕES
-            </span>
-            <span class="channel-subtitle">
-                Receba novidades e atualizações
-            </span>
+            <span class="channel-title">CANAL DE ATUALIZAÇÕES</span>
+            <span class="channel-subtitle">Receba novidades e avisos oficiais</span>
         </span>
-        <span style="margin-left:auto;font-size:18px;">
-            ›
-        </span>
+        <span style="margin-left:auto;font-size:16px;">›</span>
     </a>
 
     <div class="info" id="validity-display">
@@ -708,30 +559,10 @@ body{
     </div>
 </div>
 
-<!-- MANUTENÇÃO -->
-<div id="maintenance-view" class="card hidden">
-    <div class="maintenance-icon">
-        ⚙
-    </div>
-    <div class="tag">
-        SYSTEM OFFLINE
-    </div>
-    <div class="title" style="color:#ff365d">
-        Em manutenção
-    </div>
-    <div class="subtitle" style="margin-bottom:0">
-        Nosso sistema está temporariamente indisponível.
-        <br><br>
-        Tente novamente mais tarde.
-    </div>
-</div>
-
 <script>
-
 /* =========================
    MOUSE GLOW EFFECT
 ========================= */
-
 const mouseGlow = document.getElementById("mouseGlow");
 let isDesktop = window.matchMedia("(pointer: fine)").matches;
 
@@ -749,7 +580,6 @@ if (isDesktop && mouseGlow) {
 /* =========================
    PARTICULAS (NEVE)
 ========================= */
-
 const particles = document.getElementById("particles");
 const totalSnow = window.innerWidth < 600 ? 25 : 45;
 
@@ -766,11 +596,9 @@ for(let i = 0; i < totalSnow; i++){
     particles.appendChild(p);
 }
 
-
 /* =========================
    CONTADOR DE NATAL NO BRASIL
 ========================= */
-
 function updateChristmasCountdown() {
     const now = new Date();
     const brazilTimeOffset = -3 * 60;
@@ -801,154 +629,164 @@ function updateChristmasCountdown() {
 setInterval(updateChristmasCountdown, 1000);
 updateChristmasCountdown();
 
-
 /* =========================
    SONS (WEB AUDIO API)
 ========================= */
-
 let audioCtx = null;
-
 function sound(type){
     try{
         if(!audioCtx){
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         }
-
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
-
         osc.connect(gain);
         gain.connect(audioCtx.destination);
 
         if(type === "click"){
             osc.frequency.setValueAtTime(500, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(850, audioCtx.currentTime + .08);
-
             gain.gain.setValueAtTime(.0001, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(.08, audioCtx.currentTime + .01);
             gain.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .12);
-
             osc.start();
             osc.stop(audioCtx.currentTime + .12);
         }
-
         if(type === "success"){
             osc.frequency.setValueAtTime(500, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + .15);
-
             gain.gain.setValueAtTime(.0001, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(.12, audioCtx.currentTime + .02);
             gain.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .3);
-
             osc.start();
             osc.stop(audioCtx.currentTime + .3);
         }
     }catch(e){}
 }
 
-
 /* =========================
-   FIREBASE (NOOXSUB)
+   FIREBASE (NOOXSUB) & GERAÇÃO DE KEY
 ========================= */
+const FIREBASE_URL = "https://nooxsub-default-rtdb.firebaseio.com";
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 
-const firebaseConfig = {
-    databaseURL: "https://nooxsub-default-rtdb.firebaseio.com"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const database = firebase.database();
-const configRef = database.ref("config");
-
-let rawDateStr = "";
-let timerInterval = null;
-
-configRef.on("value", (snapshot) => {
-    const data = snapshot.val();
-    if(!data) return;
-
-    const mainView = document.getElementById("main-view");
-    const maintenanceView = document.getElementById("maintenance-view");
-
-    if(data.maintenance === true || data.maintenance === "true"){
-        mainView.classList.add("hidden");
-        maintenanceView.classList.remove("hidden");
-    } else {
-        maintenanceView.classList.add("hidden");
-        mainView.classList.remove("hidden");
-
-        document.getElementById("key-display").innerText = data.current_key || "SEM KEY";
-        rawDateStr = data.expiration_date || "";
-
-        startCountdown();
-    }
-});
-
-
-/* =========================
-   CONTADOR DE VALIDADE DA KEY
-========================= */
-
-function startCountdown(){
-    if(timerInterval) clearInterval(timerInterval);
-
-    function updateTimer(){
-        const info = document.getElementById("validity-display");
-
-        if(!rawDateStr){
-            info.innerText = "Sem data de validade definida.";
-            return;
-        }
-
-        const numbers = rawDateStr.match(/\d+/g);
-
-        if(!numbers || numbers.length < 3){
-            info.innerText = "Válida até " + rawDateStr;
-            return;
-        }
-
-        const day = parseInt(numbers[0], 10);
-        const month = parseInt(numbers[1], 10) - 1;
-        const year = parseInt(numbers[2], 10);
-        const hour = numbers[3] ? parseInt(numbers[3],10) : 23;
-        const min = numbers[4] ? parseInt(numbers[4],10) : 59;
-
-        const targetDate = new Date(year, month, day, hour, min);
-        const now = new Date();
-        const diff = targetDate - now;
-
-        if(diff <= 0){
-            info.innerHTML = `
-                ${rawDateStr} restantes
-                <br>
-                <span style="color:#ff1744; font-weight:800;">
-                    ⚠ KEY EXPIRADA
-                </span>`;
-        } else {
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-            info.innerHTML = `
-                Válida até <b>${rawDateStr}</b>
-                <br>
-                Restam <b>${days}</b> dia(s), <b>${hours}</b> hora(s) e <b>${mins}</b> min(s).`;
-        }
-    }
-
-    updateTimer();
-    timerInterval = setInterval(updateTimer, 30000);
+function generateUID() {
+    return "UID_" + crypto.randomUUID().replace(/-/g, "").slice(0, 12);
 }
 
+function generateKey(){
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let part = "";
+    for(let i = 0; i < 6; i++){
+        part += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return `VTX-${part}`;
+}
+
+let activeTimer = null;
+
+function startCountdown(expireTime) {
+    if (activeTimer) clearInterval(activeTimer);
+    activeTimer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = expireTime - now;
+
+        const info = document.getElementById("validity-display");
+        if (distance < 0) {
+            clearInterval(activeTimer);
+            localStorage.removeItem("vtx_session_v58");
+            info.innerHTML = `<span style="color:#ff1744; font-weight:800;">⚠ KEY EXPIRADA. Atualize a página.</span>`;
+            return;
+        }
+
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        info.innerHTML = `Válida por <b>24h</b><br>Expira em: <b>${hours}h ${minutes}m ${seconds}s</b>`;
+    }, 1000);
+}
+
+async function initKeySystem() {
+    try {
+        const now = new Date().getTime();
+        const sessionData = JSON.parse(localStorage.getItem('vtx_session_v58') || "null");
+        
+        if (sessionData && sessionData.expireTime > now) {
+            document.getElementById("key-display").textContent = sessionData.key;
+            startCountdown(sessionData.expireTime);
+            return;
+        }
+
+        // Buscar IP do usuário para verificação
+        let ipSafe = "LOCAL_USER";
+        try {
+            const ipRes = await fetch("https://api.ipify.org?format=json");
+            const ipData = await ipRes.json();
+            if (ipData && ipData.ip) {
+                ipSafe = ipData.ip.replace(/[.#$[\]]/g, "_");
+            }
+        } catch(e) {}
+
+        // Verificar se já tem key ativa no Firebase para este IP
+        const checkRes = await fetch(`${FIREBASE_URL}/visitas/ips/${ipSafe}.json`);
+        if (checkRes.ok) {
+            const checkData = await checkRes.json();
+            if (checkData && checkData.expireTime && checkData.expireTime > now) {
+                document.getElementById("key-display").textContent = checkData.key;
+                startCountdown(checkData.expireTime);
+                localStorage.setItem('vtx_session_v58', JSON.stringify({
+                    key: checkData.key,
+                    expireTime: checkData.expireTime
+                }));
+                return;
+            }
+        }
+
+        // Gerar nova Key
+        const newKey = generateKey();
+        const uid = generateUID();
+        const expireTime = now + ONE_DAY_MS;
+
+        // Salvar em usuariosT
+        await fetch(`${FIREBASE_URL}/usuariosT/${uid}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                key: newKey,
+                status: "ativada",
+                uid: uid,
+                criador: "AUTO_GENERATOR"
+            })
+        });
+
+        // Travar IP
+        await fetch(`${FIREBASE_URL}/visitas/ips/${ipSafe}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ key: newKey, expireTime })
+        });
+
+        localStorage.setItem('vtx_session_v58', JSON.stringify({
+            key: newKey,
+            expireTime
+        }));
+
+        document.getElementById("key-display").textContent = newKey;
+        startCountdown(expireTime);
+
+    } catch (e) {
+        document.getElementById("key-display").textContent = "VTX-ERROR";
+        document.getElementById("validity-display").innerText = "Erro ao conectar com o banco de dados.";
+    }
+}
 
 /* =========================
    COPIAR KEY
 ========================= */
-
 async function copyKey(){
-    const key = document.getElementById("key-display").innerText;
-
-    if(key === "Carregando..." || key === "SEM KEY") return;
+    const key = document.getElementById("key-display").textContent;
+    if(!key || key === "GERANDO..." || key === "VTX-ERROR") return;
 
     sound("click");
 
@@ -966,17 +804,10 @@ async function copyKey(){
     }
 }
 
-
-/* =========================
-   SUCESSO AO COPIAR
-========================= */
-
 function showSuccess(){
     const button = document.getElementById("btn-copy");
-
     button.classList.add("success");
     button.innerHTML = "✓ &nbsp; KEY COPIADA!";
-
     sound("success");
 
     setTimeout(() => {
@@ -985,6 +816,8 @@ function showSuccess(){
     }, 2200);
 }
 
+// Inicializar sistema
+initKeySystem();
 </script>
 
 </body>

@@ -3,706 +3,739 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VORTEX HUB • Key Terminal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<title>Get Key</title>
+
 <style>
-    :root {
-        --bg-deep: #030305;
-        --surface: #0a0b10;
-        --surface-glass: rgba(10, 11, 16, 0.85);
-        --border: rgba(255, 255, 255, 0.08);
-        --border-red: rgba(239, 68, 68, 0.35);
-        
-        --primary: #ef4444;
-        --primary-hover: #dc2626;
-        --primary-glow: rgba(239, 68, 68, 0.45);
-        
-        --text-main: #ffffff;
-        --text-sub: #9ca3af;
-        --text-dim: #6b7280;
-        
-        --success: #10b981;
-        --warning: #f59e0b;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',Arial,sans-serif;
+}
+
+:root{
+    --red:#ff1744;
+    --red-dark:#d50036;
+    --black:#050507;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    color:#fff;
+    overflow-x:hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(255,0,55,.18),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 10% 90%,
+            rgba(255,0,55,.10),
+            transparent 30%
+        ),
+        #050507;
+}
+
+/* =========================
+   MOUSE GLOW & FUNDO
+========================= */
+
+.mouse-glow {
+    position: fixed;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,23,68,.15) 0%, rgba(255,23,68,.02) 50%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index: 0;
+}
+
+.grid{
+    position:absolute;
+    width:200%;
+    height:100%;
+    left:-50%;
+    bottom:-35%;
+
+    background-image:
+        linear-gradient(
+            rgba(255,23,68,.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,23,68,.08) 1px,
+            transparent 1px
+        );
+
+    background-size:45px 45px;
+
+    transform:
+        perspective(500px)
+        rotateX(60deg);
+
+    animation:gridMove 12s linear infinite;
+}
+
+@keyframes gridMove{
+    from{
+        transform:
+            perspective(500px)
+            rotateX(60deg)
+            translateY(0);
     }
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Plus Jakarta Sans', sans-serif;
+    to{
+        transform:
+            perspective(500px)
+            rotateX(60deg)
+            translateY(45px);
+    }
+}
+
+.glow{
+    position:absolute;
+    width:420px;
+    height:420px;
+    background:#ff003c;
+    border-radius:50%;
+    filter:blur(170px);
+    opacity:.12;
+    animation:glowMove 8s ease-in-out infinite alternate;
+}
+
+@keyframes glowMove{
+    from{
+        transform:translate(-100px,-100px);
     }
 
-    body {
-        background-color: var(--bg-deep);
-        color: var(--text-main);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        position: relative;
-        overflow-x: hidden;
-        animation: fadeInPage 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    to{
+        transform:translate(300px,200px);
     }
+}
 
-    @keyframes fadeInPage {
-        from { opacity: 0; transform: scale(0.97); }
-        to { opacity: 1; transform: scale(1); }
-    }
+/* =========================
+   PARTICULAS (NEVE)
+========================= */
 
-    /* Efeito de luz seguindo o mouse (Desktop) */
-    .mouse-glow {
-        position: fixed;
-        width: 500px;
-        height: 500px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(239, 68, 68, 0.15) 0%, rgba(239, 68, 68, 0.03) 50%, transparent 75%);
-        pointer-events: none;
-        transform: translate(-50%, -50%);
-        z-index: 0;
-        transition: opacity 0.3s ease;
-        opacity: 0;
-    }
+.particles{
+    position:absolute;
+    inset:0;
+    z-index: 2;
+}
 
-    /* Luzes de fundo com animação flutuante */
-    .ambient-glow {
-        position: fixed;
-        width: 500px;
-        height: 500px;
-        border-radius: 50%;
-        filter: blur(140px);
-        z-index: 0;
-        pointer-events: none;
-        animation: floatGlow 10s ease-in-out infinite alternate;
-    }
-    .glow-1 {
-        top: -150px;
-        left: -150px;
-        background: rgba(239, 68, 68, 0.18);
-    }
-    .glow-2 {
-        bottom: -150px;
-        right: -150px;
-        background: rgba(220, 38, 38, 0.12);
-        animation-delay: -5s;
-    }
+.particle{
+    position:absolute;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#ffffff;
+    box-shadow:0 0 8px #ffffff;
+    animation:particleMove linear infinite;
+}
 
-    @keyframes floatGlow {
-        0% { transform: translate(0, 0) scale(1); }
-        100% { transform: translate(30px, 20px) scale(1.1); }
+@keyframes particleMove{
+    from{
+        transform:translateY(110vh);
+        opacity:0;
     }
+    15%{
+        opacity:.8;
+    }
+    85%{
+        opacity:.8;
+    }
+    to{
+        transform:translateY(-10vh);
+        opacity:0;
+    }
+}
 
-    /* Neve Natalina Animada */
-    .particles {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        z-index: 1;
-    }
-    .particle {
-        position: absolute;
-        background: #ffffff;
-        border-radius: 50%;
-        opacity: 0.65;
-        animation: fallSnow linear infinite;
-    }
-    @keyframes fallSnow {
-        0% { transform: translateY(-10vh) translateX(0); }
-        50% { transform: translateY(50vh) translateX(20px); }
-        100% { transform: translateY(105vh) translateX(-20px); }
-    }
+/* =========================
+   CARD
+========================= */
 
-    /* --- PAPAI NOEL NA LATERAL (ANIMADO & OTIMIZADO) --- */
-    .santa-helper {
-        position: fixed;
-        bottom: 25px;
-        right: 25px;
-        z-index: 100;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        background: rgba(10, 11, 16, 0.9);
-        border: 1px solid rgba(239, 68, 68, 0.5);
-        padding: 10px 18px;
-        border-radius: 50px;
-        box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 25px rgba(239, 68, 68, 0.35);
-        animation: floatSanta 3.5s ease-in-out infinite;
-        backdrop-filter: blur(12px);
-    }
-    .santa-avatar {
-        font-size: 30px;
-        animation: waveHand 1.6s ease-in-out infinite;
-        transform-origin: 70% 70%;
-        display: inline-block;
-    }
-    .santa-content {
-        display: flex;
-        flex-direction: column;
-    }
-    .santa-title {
-        font-size: 10px;
-        font-weight: 800;
-        letter-spacing: 1px;
-        color: #ef4444;
-        text-transform: uppercase;
-    }
-    .santa-speech {
-        font-size: 12px;
-        font-weight: 700;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-        white-space: nowrap;
-    }
+.card{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    padding:32px;
+    border-radius:24px;
 
-    @keyframes waveHand {
-        0% { transform: rotate(0deg); }
-        20% { transform: rotate(18deg); }
-        40% { transform: rotate(-10deg); }
-        60% { transform: rotate(18deg); }
-        80% { transform: rotate(-5deg); }
-        100% { transform: rotate(0deg); }
-    }
-    @keyframes floatSanta {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,20,25,.88),
+            rgba(8,8,11,.88)
+        );
 
-    @media (max-width: 600px) {
-        .santa-helper { bottom: 15px; right: 15px; padding: 8px 14px; }
-        .santa-avatar { font-size: 26px; }
-        .santa-speech { font-size: 11px; }
-    }
+    border:1px solid rgba(255,23,68,.35);
 
-    /* Container Principal */
-    .container {
-        position: relative;
-        z-index: 2;
-        width: 100%;
-        max-width: 520px;
-        animation: slideUpCard 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
+    backdrop-filter:blur(25px);
+    -webkit-backdrop-filter:blur(25px);
 
-    @keyframes slideUpCard {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+    box-shadow:
+        0 30px 90px rgba(0,0,0,.7),
+        0 0 60px rgba(255,0,55,.08);
 
-    .card {
-        background: var(--surface-glass);
-        backdrop-filter: blur(30px);
-        -webkit-backdrop-filter: blur(30px);
-        border: 1px solid var(--border-red);
-        border-radius: 32px;
-        padding: 42px 36px;
-        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(239, 68, 68, 0.15);
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+    text-align:center;
+    animation:cardEnter .7s cubic-bezier(.2,.8,.2,1);
+    z-index:5;
+}
 
-    .card:hover {
-        box-shadow: 0 35px 90px rgba(0, 0, 0, 0.9), 0 0 60px rgba(239, 68, 68, 0.25);
+@keyframes cardEnter{
+    from{
+        opacity:0;
+        transform:
+            translateY(30px)
+            scale(.94);
     }
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
 
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        background-size: 200% 100%;
-        animation: shimmerLine 4s linear infinite;
-    }
+/* =========================
+   LOGO
+========================= */
 
-    @keyframes shimmerLine {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
-    }
+.logo{
+    width:70px;
+    height:70px;
+    margin:0 auto 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:20px;
+    font-size:25px;
+    font-weight:800;
 
-    .header-box {
-        text-align: center;
-        margin-bottom: 28px;
-    }
+    background:
+        linear-gradient(
+            145deg,
+            #ff1744,
+            #a9002d
+        );
 
-    .badge-top {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(239, 68, 68, 0.12);
-        border: 1px solid rgba(239, 68, 68, 0.35);
-        padding: 7px 16px;
-        border-radius: 30px;
-        font-size: 11px;
-        font-weight: 800;
-        color: var(--primary);
-        letter-spacing: 2px;
-        margin-bottom: 18px;
-        text-transform: uppercase;
-        box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
-        animation: pulseBadge 3s ease-in-out infinite;
-    }
+    box-shadow:
+        0 0 35px rgba(255,23,68,.4),
+        inset 0 1px rgba(255,255,255,.3);
 
-    @keyframes pulseBadge {
-        0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(239, 68, 68, 0.25); }
-        50% { transform: scale(1.03); box-shadow: 0 0 30px rgba(239, 68, 68, 0.45); }
-    }
+    animation:logoPulse 3s ease-in-out infinite;
+}
 
-    .logo-img {
-        width: 86px;
-        height: 86px;
-        border-radius: 24px;
-        object-fit: cover;
-        border: 2px solid rgba(239, 68, 68, 0.5);
-        background: #0d0e14;
-        margin: 0 auto 16px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.35);
-        padding: 2px;
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+@keyframes logoPulse{
+    0%,100%{
+        box-shadow:
+            0 0 25px rgba(255,23,68,.25);
     }
+    50%{
+        box-shadow:
+            0 0 50px rgba(255,23,68,.55);
+    }
+}
 
-    .logo-img:hover {
-        transform: scale(1.08) rotate(3deg);
-    }
+/* =========================
+   TAG
+========================= */
 
-    .title {
-        font-size: 30px;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: var(--text-main);
-        margin-bottom: 6px;
-    }
+.tag{
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    padding:7px 13px;
+    border-radius:50px;
+    background:rgba(255,23,68,.08);
+    border:1px solid rgba(255,23,68,.25);
+    color:#ff5473;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:1.5px;
+    margin-bottom:12px;
+}
 
-    .title span {
-        color: var(--primary);
-        text-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
-    }
+.tag::before{
+    content:"";
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#ff1744;
+    box-shadow:0 0 10px #ff1744;
+}
 
-    .subtitle {
-        font-size: 13px;
-        color: var(--text-dim);
-        font-weight: 600;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
+/* =========================
+   TITULO
+========================= */
 
-    .status-wrapper {
-        text-align: center;
-        margin-bottom: 22px;
-    }
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(16, 185, 129, 0.12);
-        border: 1px solid rgba(16, 185, 129, 0.25);
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--success);
-        transition: transform 0.2s ease;
-    }
-    .status-badge:hover {
-        transform: scale(1.05);
-    }
-    .status-dot {
-        width: 7px;
-        height: 7px;
-        background-color: var(--success);
-        border-radius: 50%;
-        box-shadow: 0 0 10px var(--success);
-        animation: pulseDot 2s infinite;
-    }
-    @keyframes pulseDot {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
-    }
+.title{
+    font-size:24px;
+    font-weight:800;
+    letter-spacing:-.7px;
+    margin-bottom:8px;
+}
 
-    .christmas-banner {
-        background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(16, 185, 129, 0.1));
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        border-radius: 18px;
-        padding: 14px 18px;
-        text-align: center;
-        margin-bottom: 22px;
-        transition: transform 0.3s ease, border-color 0.3s ease;
-    }
-    .christmas-banner:hover {
-        transform: translateY(-2px);
-        border-color: rgba(239, 68, 68, 0.6);
-    }
-    .christmas-banner span {
-        display: block;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        color: #f87171;
-        margin-bottom: 4px;
-    }
-    .christmas-banner strong {
-        font-size: 17px;
-        font-weight: 800;
-        color: #ffffff;
-        letter-spacing: 0.5px;
-    }
+.subtitle{
+    color:#85858d;
+    font-size:12px;
+    line-height:1.6;
+    margin-bottom:18px;
+}
 
-    .key-container {
-        background: rgba(0, 0, 0, 0.6);
-        border: 1px solid rgba(239, 68, 68, 0.4);
-        border-radius: 18px;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 16px;
-        box-shadow: inset 0 2px 12px rgba(0,0,0,0.7);
-        transition: all 0.3s ease;
-    }
-    .key-container:hover {
-        border-color: rgba(239, 68, 68, 0.8);
-        box-shadow: inset 0 2px 15px rgba(0,0,0,0.8), 0 0 20px rgba(239, 68, 68, 0.2);
-    }
+/* =========================
+   CONTADOR DE NATAL
+========================= */
 
-    .key-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        color: var(--text-dim);
-        letter-spacing: 2px;
-        font-weight: 800;
-        margin-bottom: 8px;
-    }
+.christmas-banner{
+    background:rgba(255,23,68,0.06);
+    border:1px solid rgba(255,23,68,0.25);
+    border-radius:12px;
+    padding:10px 14px;
+    text-align:center;
+    margin-bottom:18px;
+}
+.christmas-banner span{
+    display:block;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:#ff5473;
+    margin-bottom:3px;
+}
+.christmas-banner strong{
+    font-size:13px;
+    font-weight:800;
+    color:#ffffff;
+}
 
-    .key-value {
-        font-size: 21px;
-        font-weight: 800;
-        color: #ffffff;
-        letter-spacing: 2.5px;
-        word-break: break-all;
-        text-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
-        animation: textGlow 3s ease-in-out infinite alternate;
-    }
+/* =========================
+   KEY
+========================= */
 
-    @keyframes textGlow {
-        0% { text-shadow: 0 0 10px rgba(239, 68, 68, 0.4); }
-        100% { text-shadow: 0 0 22px rgba(239, 68, 68, 0.8), 0 0 5px #fff; }
-    }
+.key-box{
+    padding:19px 15px;
+    border-radius:14px;
+    background:rgba(0,0,0,.65);
+    border:1px dashed rgba(255,23,68,.55);
+    color:#fff;
+    font-family:monospace;
+    font-size:15px;
+    letter-spacing:2px;
+    word-break:break-all;
+    margin-bottom:13px;
+    transition:.25s;
+}
 
-    .btn-main {
-        width: 100%;
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-        color: #fff;
-        border: none;
-        border-radius: 16px;
-        padding: 18px;
-        font-size: 15px;
-        font-weight: 800;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
-        text-transform: uppercase;
-        letter-spacing: 1.2px;
-        position: relative;
-        overflow: hidden;
-    }
+.key-box:hover{
+    border-color:#ff1744;
+    box-shadow:
+        0 0 25px rgba(255,23,68,.12),
+        inset 0 0 25px rgba(255,23,68,.05);
+}
 
-    .btn-main::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(rgba(255,255,255,0.2), transparent);
-        opacity: 0;
-        transition: opacity 0.2s ease;
-    }
+/* =========================
+   STATUS
+========================= */
 
-    .btn-main:hover {
-        transform: translateY(-3px) scale(1.01);
-        box-shadow: 0 12px 35px rgba(239, 68, 68, 0.65);
-        filter: brightness(1.1);
-    }
+.status{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:7px;
+    color:#777780;
+    font-size:10px;
+    margin-bottom:18px;
+}
 
-    .btn-main:hover::after {
-        opacity: 1;
-    }
+.status-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#20e070;
+    box-shadow:0 0 10px #20e070;
+    animation:statusPulse 1.5s infinite;
+}
 
-    .btn-main:active {
-        transform: translateY(1px) scale(0.98);
-        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.5);
+@keyframes statusPulse{
+    50%{
+        opacity:.35;
+        transform:scale(.7);
     }
+}
 
-    .msg {
-        text-align: center;
-        font-size: 12px;
-        font-weight: 700;
-        color: var(--success);
-        min-height: 20px;
-        margin-top: 12px;
-        animation: fadeInMsg 0.3s ease;
-    }
+/* =========================
+   BOTÕES
+========================= */
 
-    @keyframes fadeInMsg {
-        from { opacity: 0; transform: translateY(-5px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+.btn{
+    position:relative;
+    overflow:hidden;
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:13px;
+    cursor:pointer;
+    color:#fff;
+    font-size:13px;
+    font-weight:800;
+    letter-spacing:.6px;
+    transition:.2s;
+}
 
-    .stats-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 18px;
-    }
+.btn:hover{
+    transform:translateY(-2px);
+}
 
-    .stat-card {
-        background: rgba(255, 255, 255, 0.025);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 16px;
-        text-align: left;
-        transition: all 0.25s ease;
-    }
+.btn:active{
+    transform:scale(.97);
+}
 
-    .stat-card:hover {
-        background: rgba(255, 255, 255, 0.05);
-        border-color: rgba(239, 68, 68, 0.3);
-        transform: translateY(-2px);
-    }
+/* copiar */
 
-    .stat-card span {
-        display: block;
-        font-size: 10px;
-        color: var(--text-dim);
-        text-transform: uppercase;
-        font-weight: 700;
-        letter-spacing: 1px;
-        margin-bottom: 6px;
-    }
+.btn-copy{
+    background:
+        linear-gradient(
+            135deg,
+            #ff1744,
+            #d50036
+        );
+    box-shadow:0 8px 28px rgba(255,0,55,.25);
+    margin-bottom:12px;
+}
 
-    .stat-card strong {
-        font-size: 13px;
-        color: var(--text-sub);
-        font-weight: 700;
-    }
+.btn-copy:hover{
+    box-shadow:0 12px 40px rgba(255,0,55,.4);
+}
 
-    .stat-card.highlight strong {
-        color: var(--warning);
-    }
+/* brilho */
 
-    .social-links {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 16px;
-    }
+.btn::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-120%;
+    width:60%;
+    height:100%;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.25),
+            transparent
+        );
+    transform:skewX(-20deg);
+}
 
-    .social-btn {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px;
-        text-align: center;
-        text-decoration: none;
-        color: var(--text-sub);
-        font-size: 12px;
-        font-weight: 700;
-        transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-    }
+.btn:hover::before{
+    animation:shine .7s;
+}
 
-    .social-btn:hover {
-        background: rgba(239, 68, 68, 0.12);
-        color: var(--text-main);
-        border-color: rgba(239, 68, 68, 0.4);
-        transform: translateY(-3px) scale(1.02);
-        box-shadow: 0 5px 15px rgba(239, 68, 68, 0.2);
+@keyframes shine{
+    to{
+        left:140%;
     }
+}
 
-    .social-btn:active {
-        transform: translateY(-1px) scale(0.98);
-    }
+/* =========================
+   CANAL & PRODUTOS VIP
+========================= */
 
-    .footer {
-        text-align: center;
-        margin-top: 24px;
-        font-size: 11px;
-        color: var(--text-dim);
-        letter-spacing: 2px;
-        font-weight: 800;
-        text-transform: uppercase;
-    }
+.channel-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-decoration:none;
+    background:rgba(255,255,255,.025);
+    border:1px solid rgba(255,23,68,.35);
+    color:#fff;
+    box-shadow:0 0 20px rgba(255,23,68,.05);
+    margin-bottom:10px;
+}
 
-    .loading {
-        position: fixed;
-        inset: 0;
-        background: var(--bg-deep);
-        z-index: 99;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        transition: opacity 0.4s ease;
-    }
+.channel-btn:hover{
+    border-color:#ff1744;
+    background:rgba(255,23,68,.08);
+    box-shadow:0 0 30px rgba(255,23,68,.16);
+}
 
-    .spinner {
-        width: 50px;
-        height: 50px;
-        border: 3px solid rgba(239, 68, 68, 0.12);
-        border-top-color: var(--primary);
-        border-radius: 50%;
-        animation: spin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-        margin-bottom: 16px;
-        box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
-    }
+.btn-vip{
+    background: linear-gradient(135deg, rgba(255, 23, 68, 0.2), rgba(255, 0, 85, 0.3));
+    border: 1px solid #ff1744;
+    box-shadow: 0 0 20px rgba(255, 23, 68, 0.25);
+}
 
-    .loading p {
-        font-size: 12px;
-        color: var(--text-dim);
-        letter-spacing: 2.5px;
-        font-weight: 800;
-        text-transform: uppercase;
-        animation: pulseText 1.5s ease-in-out infinite alternate;
-    }
+.btn-vip:hover{
+    background: linear-gradient(135deg, #ff1744, #d50036);
+    box-shadow: 0 0 30px rgba(255, 23, 68, 0.5);
+}
 
-    @keyframes pulseText {
-        from { opacity: 0.5; }
-        to { opacity: 1; }
-    }
+.vip-icon{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#ff1744;
+    color:white;
+    font-size:14px;
+    box-shadow:0 0 15px rgba(255,23,68,.4);
+}
 
-    @keyframes spin {
-        to { transform: rotate(360deg); }
+.whatsapp-icon{
+    width:27px;
+    height:27px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#25D366;
+    color:white;
+    font-size:15px;
+    box-shadow:0 0 15px rgba(37,211,102,.25);
+}
+
+.channel-text{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.channel-title{
+    font-size:11px;
+    font-weight:800;
+}
+
+.channel-subtitle{
+    margin-top:2px;
+    color:#777780;
+    font-size:9px;
+}
+
+/* =========================
+   INFO
+========================= */
+
+.info{
+    margin-top:20px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.06);
+    color:#777780;
+    font-size:11px;
+    line-height:1.8;
+}
+
+.info b{
+    color:#fff;
+}
+
+/* =========================
+   SUCESSO
+========================= */
+
+.success{
+    background:
+        linear-gradient(
+            135deg,
+            #00c853,
+            #00a844
+        ) !important;
+    box-shadow:0 8px 30px rgba(0,200,83,.3) !important;
+}
+
+/* =========================
+   MANUTENÇÃO
+========================= */
+
+.maintenance-icon{
+    width:70px;
+    height:70px;
+    margin:0 auto 18px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+    background:rgba(255,23,68,.08);
+    border:1px solid rgba(255,23,68,.25);
+    animation:maintenance 2s infinite;
+}
+
+@keyframes maintenance{
+    0%,90%,100%{
+        transform:rotate(0);
     }
+    93%{
+        transform:rotate(-5deg);
+    }
+    96%{
+        transform:rotate(5deg);
+    }
+}
+
+.hidden{
+    display:none !important;
+}
+
+@media(max-width:480px){
+    .card{
+        padding:26px 20px;
+    }
+    .title{
+        font-size:21px;
+    }
+    .key-box{
+        font-size:13px;
+    }
+}
 </style>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 </head>
+
 <body>
 
-<!-- Papai Noel Animado na Lateral -->
-<div class="santa-helper">
-    <div class="santa-avatar">🎅</div>
-    <div class="santa-content">
-        <span class="santa-title">Papai Noel</span>
-        <span class="santa-speech">Ho Ho Ho! Tchau! 👋</span>
-    </div>
-</div>
-
+<!-- Efeito de luz do mouse -->
 <div class="mouse-glow" id="mouseGlow"></div>
-<div class="ambient-glow glow-1"></div>
-<div class="ambient-glow glow-2"></div>
-<div class="particles" id="snowParticles"></div>
 
-<div class="container">
-    <div class="card">
-        <div class="header-box">
-            <div class="badge-top">🎄 Especial de Natal</div>
-            <img src="https://i.pinimg.com/736x/6e/c6/08/6ec6082652cf3caeb3cdc52c5d3ab553.jpg" alt="Vortex" class="logo-img">
-            <h1 class="title">VORTEX <span>KEY</span></h1>
-            <div class="subtitle">Terminal de Acesso Seguro</div>
-        </div>
+<div class="background">
+    <div class="grid"></div>
+    <div class="glow"></div>
+    <div class="particles" id="particles"></div>
+</div>
 
-        <div class="status-wrapper">
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                <span>SISTEMA ONLINE</span>
-            </div>
-        </div>
+<!-- TELA PRINCIPAL -->
+<div id="main-view" class="card">
+    <div class="logo">
+        VTX
+    </div>
 
-        <div class="christmas-banner">
-            <span>🎁 Faltam para o Natal (Brasil)</span>
-            <strong id="christmasCountdown">Calculando...</strong>
-        </div>
+    <div class="tag">
+        🎄 VORTEX KEY SYSTEM ONLINE
+    </div>
 
-        <div class="key-container">
-            <div class="key-label">Sua Chave de Acesso</div>
-            <div class="key-value" id="keyText">GERANDO...</div>
-        </div>
+    <div class="title">
+        Sua Key está pronta
+    </div>
 
-        <button class="btn-main" id="copyBtn" onclick="playClickSound(); copyKey()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Copiar Chave
-        </button>
-        <div class="msg" id="msg"></div>
+    <div class="subtitle">
+        Copie sua chave de acesso e utilize-a no aplicativo.
+    </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span>Gerada em</span>
-                <strong id="time">--:--</strong>
-            </div>
-            <div class="stat-card highlight">
-                <span>Expira em</span>
-                <strong id="countdown">Calculando...</strong>
-            </div>
-            <div class="stat-card">
-                <span>Seu IP</span>
-                <strong id="userIp">Carregando...</strong>
-            </div>
-            <div class="stat-card">
-                <span>Status ID</span>
-                <strong style="color: var(--success)">Ativada</strong>
-            </div>
-        </div>
+    <!-- Contador de Natal -->
+    <div class="christmas-banner">
+        <span>🎁 Faltam para o Natal (Brasil)</span>
+        <strong id="christmasCountdown">Calculando...</strong>
+    </div>
 
-        <div class="social-links">
-            <a href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" class="social-btn" onclick="playClickSound()">
-                💬 WhatsApp
-            </a>
-            <a href="https://t.me/vtxmdz" target="_blank" class="social-btn" onclick="playClickSound()">
-                ✈ Telegram
-            </a>
-        </div>
+    <div class="key-box" id="key-display">
+        Carregando...
+    </div>
 
-        <div class="footer">
-            Developed by Vortex Hub
-        </div>
+    <div class="status">
+        <span class="status-dot"></span>
+        SISTEMA OPERACIONAL
+    </div>
+
+    <!-- COPIAR -->
+    <button class="btn btn-copy" id="btn-copy" onclick="copyKey()">
+        ⧉ &nbsp; COPIAR KEY
+    </button>
+
+    <!-- PRODUTOS VIP -->
+    <a class="btn channel-btn btn-vip" href="https://discord.gg/FEkBTeZ5j" target="_blank" rel="noopener noreferrer" onclick="sound('click')">
+        <span class="vip-icon">
+            👑
+        </span>
+        <span class="channel-text">
+            <span class="channel-title">
+                PRODUTOS VIP
+            </span>
+            <span class="channel-subtitle">
+                Adquira acessos e recursos exclusivos
+            </span>
+        </span>
+        <span style="margin-left:auto;font-size:18px;">
+            ›
+        </span>
+    </a>
+
+    <!-- CANAL -->
+    <a class="btn channel-btn" href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" rel="noopener noreferrer" onclick="sound('click')">
+        <span class="whatsapp-icon">
+            💬
+        </span>
+        <span class="channel-text">
+            <span class="channel-title">
+                CANAL DE ATUALIZAÇÕES
+            </span>
+            <span class="channel-subtitle">
+                Receba novidades e atualizações
+            </span>
+        </span>
+        <span style="margin-left:auto;font-size:18px;">
+            ›
+        </span>
+    </a>
+
+    <div class="info" id="validity-display">
+        Verificando validade...
     </div>
 </div>
 
-<div class="loading" id="loading">
-    <div class="spinner"></div>
-    <p id="loadingText">CONECTANDO AO SERVIDOR...</p>
+<!-- MANUTENÇÃO -->
+<div id="maintenance-view" class="card hidden">
+    <div class="maintenance-icon">
+        ⚙
+    </div>
+    <div class="tag">
+        SYSTEM OFFLINE
+    </div>
+    <div class="title" style="color:#ff365d">
+        Em manutenção
+    </div>
+    <div class="subtitle" style="margin-bottom:0">
+        Nosso sistema está temporariamente indisponível.
+        <br><br>
+        Tente novamente mais tarde.
+    </div>
 </div>
 
 <script>
-// Sistema de Som de Clique Satisfatório (Web Audio API)
-function playClickSound() {
-    try {
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(600, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.04);
-        
-        gainNode.gain.setValueAtTime(0.15, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.04);
-        
-        osc.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-        
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.04);
-    } catch (e) {}
-}
 
-const ONE_DAY_MS = 1 * 24 * 60 * 60 * 1000; 
-const FIREBASE_URL = "https://nooxsub-default-rtdb.firebaseio.com";
-
-function setLoadMsg(msg) {
-    const el = document.getElementById("loadingText");
-    if(el) el.textContent = msg;
-}
+/* =========================
+   MOUSE GLOW EFFECT
+========================= */
 
 const mouseGlow = document.getElementById("mouseGlow");
 let isDesktop = window.matchMedia("(pointer: fine)").matches;
 
-if (isDesktop) {
+if (isDesktop && mouseGlow) {
     window.addEventListener("mousemove", (e) => {
         mouseGlow.style.opacity = "1";
         mouseGlow.style.left = e.clientX + "px";
@@ -713,25 +746,30 @@ if (isDesktop) {
     });
 }
 
-const snowContainer = document.getElementById("snowParticles");
-const totalSnowflakes = window.innerWidth < 600 ? 25 : 50;
+/* =========================
+   PARTICULAS (NEVE)
+========================= */
 
-for(let i = 0; i < totalSnowflakes; i++) {
-    const flake = document.createElement("div");
-    flake.className = "particle";
-    flake.style.left = Math.random() * 100 + "%";
-    flake.style.top = -10 + "px";
-    
-    const size = (2 + Math.random() * 4) + "px";
-    flake.style.width = size;
-    flake.style.height = size;
-    
-    const duration = (5 + Math.random() * 7) + "s";
-    flake.style.animationDuration = duration;
-    flake.style.animationDelay = -(Math.random() * 10) + "s";
-    
-    snowContainer.appendChild(flake);
+const particles = document.getElementById("particles");
+const totalSnow = window.innerWidth < 600 ? 25 : 45;
+
+for(let i = 0; i < totalSnow; i++){
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.animationDuration = (5 + Math.random() * 8) + "s";
+    p.style.animationDelay = (-Math.random() * 10) + "s";
+    p.style.opacity = Math.random();
+    const size = (2 + Math.random() * 2.5) + "px";
+    p.style.width = size;
+    p.style.height = size;
+    particles.appendChild(p);
 }
+
+
+/* =========================
+   CONTADOR DE NATAL NO BRASIL
+========================= */
 
 function updateChristmasCountdown() {
     const now = new Date();
@@ -763,209 +801,191 @@ function updateChristmasCountdown() {
 setInterval(updateChristmasCountdown, 1000);
 updateChristmasCountdown();
 
-function generateUID() {
-    return "UID_" + crypto.randomUUID().replace(/-/g, "").slice(0, 12);
+
+/* =========================
+   SONS (WEB AUDIO API)
+========================= */
+
+let audioCtx = null;
+
+function sound(type){
+    try{
+        if(!audioCtx){
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if(type === "click"){
+            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(850, audioCtx.currentTime + .08);
+
+            gain.gain.setValueAtTime(.0001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(.08, audioCtx.currentTime + .01);
+            gain.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .12);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + .12);
+        }
+
+        if(type === "success"){
+            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + .15);
+
+            gain.gain.setValueAtTime(.0001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(.12, audioCtx.currentTime + .02);
+            gain.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .3);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + .3);
+        }
+    }catch(e){}
 }
 
-function generateKey(){
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let part = "";
-    for(let i = 0; i < 6; i++){
-        part += chars.charAt(Math.floor(Math.random() * chars.length));
+
+/* =========================
+   FIREBASE (NOOXSUB)
+========================= */
+
+const firebaseConfig = {
+    databaseURL: "https://nooxsub-default-rtdb.firebaseio.com"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+const configRef = database.ref("config");
+
+let rawDateStr = "";
+let timerInterval = null;
+
+configRef.on("value", (snapshot) => {
+    const data = snapshot.val();
+    if(!data) return;
+
+    const mainView = document.getElementById("main-view");
+    const maintenanceView = document.getElementById("maintenance-view");
+
+    if(data.maintenance === true || data.maintenance === "true"){
+        mainView.classList.add("hidden");
+        maintenanceView.classList.remove("hidden");
+    } else {
+        maintenanceView.classList.add("hidden");
+        mainView.classList.remove("hidden");
+
+        document.getElementById("key-display").innerText = data.current_key || "SEM KEY";
+        rawDateStr = data.expiration_date || "";
+
+        startCountdown();
     }
-    return `VTX-${part}`;
-}
+});
 
-let activeTimer = null;
 
-function startCountdown(expireTime) {
-    if (activeTimer) clearInterval(activeTimer);
-    activeTimer = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = expireTime - now;
+/* =========================
+   CONTADOR DE VALIDADE DA KEY
+========================= */
 
-        if (distance < 0) {
-            clearInterval(activeTimer);
-            localStorage.removeItem("vtx_session_v58");
-            window.location.reload();
+function startCountdown(){
+    if(timerInterval) clearInterval(timerInterval);
+
+    function updateTimer(){
+        const info = document.getElementById("validity-display");
+
+        if(!rawDateStr){
+            info.innerText = "Sem data de validade definida.";
             return;
         }
 
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        document.getElementById("countdown").textContent = `${hours}h ${minutes}m ${seconds}s`;
-    }, 1000);
+        const numbers = rawDateStr.match(/\d+/g);
+
+        if(!numbers || numbers.length < 3){
+            info.innerText = "Válida até " + rawDateStr;
+            return;
+        }
+
+        const day = parseInt(numbers[0], 10);
+        const month = parseInt(numbers[1], 10) - 1;
+        const year = parseInt(numbers[2], 10);
+        const hour = numbers[3] ? parseInt(numbers[3],10) : 23;
+        const min = numbers[4] ? parseInt(numbers[4],10) : 59;
+
+        const targetDate = new Date(year, month, day, hour, min);
+        const now = new Date();
+        const diff = targetDate - now;
+
+        if(diff <= 0){
+            info.innerHTML = `
+                ${rawDateStr} restantes
+                <br>
+                <span style="color:#ff1744; font-weight:800;">
+                    ⚠ KEY EXPIRADA
+                </span>`;
+        } else {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+            info.innerHTML = `
+                Válida até <b>${rawDateStr}</b>
+                <br>
+                Restam <b>${days}</b> dia(s), <b>${hours}</b> hora(s) e <b>${mins}</b> min(s).`;
+        }
+    }
+
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 30000);
 }
 
-function hideLoading() {
-    const loader = document.getElementById("loading");
-    if (loader) {
-        loader.style.opacity = "0";
-        setTimeout(() => loader.style.display = "none", 400);
+
+/* =========================
+   COPIAR KEY
+========================= */
+
+async function copyKey(){
+    const key = document.getElementById("key-display").innerText;
+
+    if(key === "Carregando..." || key === "SEM KEY") return;
+
+    sound("click");
+
+    try{
+        await navigator.clipboard.writeText(key);
+        showSuccess();
+    }catch(error){
+        const area = document.createElement("textarea");
+        area.value = key;
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        area.remove();
+        showSuccess();
     }
 }
 
-async function incrementVisitasTotal() {
-    try {
-        const res = await fetch(`${FIREBASE_URL}/visitas/total.json`);
-        let currentTotal = 0;
-        if (res.ok) {
-            const data = await res.json();
-            if (data !== null) currentTotal = parseInt(data);
-        }
-        
-        await fetch(`${FIREBASE_URL}/visitas/total.json`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(currentTotal + 1)
-        });
-    } catch(e) {
-        console.log("Erro ao atualizar total:", e);
-    }
-}
 
-async function getIpAndValidate() {
-    try {
-        const ipRes = await fetch("https://api.ipify.org?format=json");
-        const ipData = await ipRes.json();
-        const rawIp = ipData.ip;
-        const ip = rawIp.replace(/[.#$[\]]/g, "_");
-        document.getElementById("userIp").textContent = rawIp;
+/* =========================
+   SUCESSO AO COPIAR
+========================= */
 
-        const lockRes = await fetch(`${FIREBASE_URL}/visitas/ips/${ip}.json`);
-        if (lockRes.ok) {
-            const lockData = await lockRes.json();
-            const now = new Date().getTime();
+function showSuccess(){
+    const button = document.getElementById("btn-copy");
 
-            if (lockData && lockData.expireTime && lockData.expireTime > now) {
-                document.getElementById("keyText").textContent = lockData.key;
-                document.getElementById("time").textContent = lockData.generatedAt;
-                startCountdown(lockData.expireTime);
-                hideLoading();
+    button.classList.add("success");
+    button.innerHTML = "✓ &nbsp; KEY COPIADA!";
 
-                localStorage.setItem('vtx_session_v58', JSON.stringify({
-                    key: lockData.key,
-                    generatedAt: lockData.generatedAt,
-                    ip: rawIp,
-                    expireTime: lockData.expireTime
-                }));
-                return null; 
-            }
-        }
-        return ip;
-    } catch(e) { 
-        document.getElementById("userIp").textContent = "DESCONHECIDO";
-        return "IP_DESCONHECIDO_" + Math.floor(Math.random() * 1000); 
-    }
-}
+    sound("success");
 
-async function verifyAndLoadKey() {
-    try {
-        const now = new Date().getTime();
-
-        const sessionData = JSON.parse(localStorage.getItem('vtx_session_v58') || "null");
-        if (sessionData && sessionData.expireTime > now) {
-            document.getElementById("keyText").textContent = sessionData.key;
-            document.getElementById("time").textContent = sessionData.generatedAt || "--";
-            document.getElementById("userIp").textContent = sessionData.ip || "Local";
-            startCountdown(sessionData.expireTime);
-            hideLoading();
-            return; 
-        }
-
-        setLoadMsg("OBTENDO SEU IP...");
-        const ip = await getIpAndValidate();
-        if (!ip) return; 
-
-        setLoadMsg("GERANDO NOVA KEY...");
-        const newKey = generateKey();
-        const uid = generateUID(); 
-        const generatedAt = new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
-        const expireTime = now + ONE_DAY_MS;
-
-        const payloadData = {
-            key: newKey,
-            validade: "1",
-            dias: "1",
-            dispositivos: "1",
-            device: "",
-            status: "ativada",
-            uid: uid,
-            criador: "GERADOR_AUTOMATICO"
-        };
-
-        await fetch(`${FIREBASE_URL}/usuariosT/${uid}.json`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payloadData)
-        });
-
-        if (!ip.startsWith("IP_DESCONHECIDO")) {
-            await fetch(`${FIREBASE_URL}/visitas/ips/${ip}.json`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ key: newKey, expireTime, generatedAt })
-            }).catch(e => console.log("Erro ao salvar trava IP:", e));
-
-            await incrementVisitasTotal();
-        }
-
-        const rawIp = ip.startsWith("IP_DESCONHECIDO") ? "Oculto" : ip.replace(/_/g, ".");
-        localStorage.setItem('vtx_session_v58', JSON.stringify({
-            key: newKey,
-            generatedAt,
-            ip: rawIp,
-            expireTime
-        }));
-
-        document.getElementById("keyText").textContent = newKey;
-        document.getElementById("time").textContent = generatedAt;
-        document.getElementById("msg").textContent = "KEY GERADA COM SUCESSO!";
-        
-        startCountdown(expireTime);
-        hideLoading();
-
-    } catch (e) {
-        setLoadMsg("ERRO AO CONECTAR");
-        setTimeout(hideLoading, 1500);
-    }
-}
-
-function triggerSuccess() {
-    document.getElementById("msg").textContent = "KEY COPIADA COM SUCESSO!";
     setTimeout(() => {
-        document.getElementById("msg").textContent = "";
-    }, 3000);
+        button.classList.remove("success");
+        button.innerHTML = "⧉ &nbsp; COPIAR KEY";
+    }, 2200);
 }
 
-function copyKey(){
-    const k = document.getElementById("keyText").textContent;
-    if(!k || k === "GERANDO..." || k === "ERRO AO CONECTAR") return;
-    
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(k).then(triggerSuccess).catch(() => fallbackCopy(k));
-    } else {
-        fallbackCopy(k);
-    }
-}
-
-function fallbackCopy(text) {
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-    textArea.style.position = "fixed";
-    textArea.style.opacity = "0";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-        if (document.execCommand('copy')) triggerSuccess();
-    } catch (err) {}
-    document.body.removeChild(textArea);
-}
-
-verifyAndLoadKey();
 </script>
+
 </body>
 </html>

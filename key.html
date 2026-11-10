@@ -718,7 +718,6 @@ async function initKeySystem() {
             return;
         }
 
-        // Buscar IP do usuário para verificação
         let ipSafe = "LOCAL_USER";
         try {
             const ipRes = await fetch("https://api.ipify.org?format=json");
@@ -728,7 +727,6 @@ async function initKeySystem() {
             }
         } catch(e) {}
 
-        // Verificar se já tem key ativa no Firebase para este IP
         const checkRes = await fetch(`${FIREBASE_URL}/visitas/ips/${ipSafe}.json`);
         if (checkRes.ok) {
             const checkData = await checkRes.json();
@@ -743,12 +741,10 @@ async function initKeySystem() {
             }
         }
 
-        // Gerar nova Key
         const newKey = generateKey();
         const uid = generateUID();
         const expireTime = now + ONE_DAY_MS;
 
-        // Salvar em usuariosT
         await fetch(`${FIREBASE_URL}/usuariosT/${uid}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -760,7 +756,6 @@ async function initKeySystem() {
             })
         });
 
-        // Travar IP
         await fetch(`${FIREBASE_URL}/visitas/ips/${ipSafe}.json`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -816,7 +811,6 @@ function showSuccess(){
     }, 2200);
 }
 
-// Inicializar sistema
 initKeySystem();
 </script>
 

@@ -3,24 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VORTEX HUB • Get Key Automático</title>
+<title>VORTEX HUB • Key Terminal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg-deep: #060609;
-        --surface: #0d0e15;
-        --surface-glass: rgba(13, 14, 21, 0.85);
-        --border: rgba(255, 255, 255, 0.1);
+        --bg-deep: #050507;
+        --surface: #0b0c10;
+        --surface-glass: rgba(11, 12, 16, 0.82);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-red: rgba(239, 68, 68, 0.3);
         
-        --primary: #00f2fe;
-        --primary-glow: rgba(0, 242, 254, 0.25);
-        --accent: #9d4edd;
+        --primary: #ef4444;
+        --primary-hover: #dc2626;
+        --primary-glow: rgba(239, 68, 68, 0.35);
         
         --text-main: #ffffff;
-        --text-sub: #a0aec0;
-        --text-dim: #64748b;
+        --text-sub: #9ca3af;
+        --text-dim: #6b7280;
         
         --success: #10b981;
         --warning: #f59e0b;
@@ -45,48 +46,64 @@
         overflow-x: hidden;
     }
 
+    /* Efeito de luz seguindo o mouse (Desktop) */
+    .mouse-glow {
+        position: fixed;
+        width: 450px;
+        height: 450px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(239, 68, 68, 0.12) 0%, rgba(239, 68, 68, 0.02) 50%, transparent 70%);
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+    }
+
+    /* Ambient background glows fixos */
     .ambient-glow {
         position: fixed;
-        width: 380px;
-        height: 380px;
+        width: 400px;
+        height: 400px;
         border-radius: 50%;
-        filter: blur(120px);
+        filter: blur(130px);
         z-index: 0;
         pointer-events: none;
     }
     .glow-1 {
-        top: -120px;
-        left: -120px;
-        background: rgba(157, 78, 221, 0.18);
+        top: -150px;
+        left: -150px;
+        background: rgba(239, 68, 68, 0.15);
     }
     .glow-2 {
-        bottom: -120px;
-        right: -120px;
-        background: rgba(0, 242, 254, 0.15);
+        bottom: -150px;
+        right: -150px;
+        background: rgba(220, 38, 38, 0.1);
     }
 
+    /* Neve Natalina */
     .particles {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: 0;
+        z-index: 1;
     }
     .particle {
         position: absolute;
-        background: var(--primary);
+        background: #ffffff;
         border-radius: 50%;
-        opacity: 0.3;
-        animation: floatUp linear infinite;
+        opacity: 0.6;
+        animation: fallSnow linear infinite;
     }
-    @keyframes floatUp {
-        0% { transform: translateY(105vh) scale(0); opacity: 0; }
-        50% { opacity: 0.6; }
-        100% { transform: translateY(-5vh) scale(1); opacity: 0; }
+    @keyframes fallSnow {
+        0% { transform: translateY(-10vh) translateX(0); }
+        50% { transform: translateY(50vh) translateX(15px); }
+        100% { transform: translateY(105vh) translateX(-15px); }
     }
 
     .container {
         position: relative;
-        z-index: 1;
+        z-index: 2;
         width: 100%;
         max-width: 440px;
     }
@@ -95,10 +112,10 @@
         background: var(--surface-glass);
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
-        border: 1px solid var(--border);
+        border: 1px solid var(--border-red);
         border-radius: 28px;
-        padding: 36px 28px;
-        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 242, 254, 0.08);
+        padding: 34px 26px;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(239, 68, 68, 0.12);
         position: relative;
         overflow: hidden;
     }
@@ -110,28 +127,46 @@
         left: 0;
         right: 0;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
     }
 
+    /* Topo: Logo Badge vermelha e Título */
     .header-box {
         text-align: center;
-        margin-bottom: 24px;
+        margin-bottom: 22px;
+    }
+
+    .badge-top {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: 1.5px;
+        margin-bottom: 16px;
+        text-transform: uppercase;
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
     }
 
     .logo-img {
-        width: 76px;
-        height: 76px;
-        border-radius: 22px;
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
         object-fit: cover;
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        background: #111118;
-        margin: 0 auto 16px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 242, 254, 0.2);
+        border: 2px solid rgba(239, 68, 68, 0.4);
+        background: #111116;
+        margin: 0 auto 14px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(239, 68, 68, 0.3);
         padding: 2px;
     }
 
     .title {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 800;
         letter-spacing: -0.5px;
         color: var(--text-main);
@@ -139,57 +174,81 @@
     }
 
     .title span {
-        background: linear-gradient(135deg, #00f2fe, #9d4edd);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: var(--primary);
+        text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
     }
 
     .subtitle {
-        font-size: 11px;
+        font-size: 12px;
         color: var(--text-dim);
-        font-weight: 700;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-    }
-
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(16, 185, 129, 0.12);
-        border: 1px solid rgba(16, 185, 129, 0.25);
-        padding: 6px 14px;
-        border-radius: 30px;
-        font-size: 11px;
-        font-weight: 700;
-        color: var(--success);
-        margin-bottom: 24px;
+        font-weight: 600;
         letter-spacing: 0.5px;
     }
 
+    /* Status Online */
+    .status-wrapper {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(16, 185, 129, 0.1);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--success);
+    }
     .status-dot {
-        width: 7px;
-        height: 7px;
+        width: 6px;
+        height: 6px;
         background-color: var(--success);
         border-radius: 50%;
-        box-shadow: 0 0 10px var(--success);
+        box-shadow: 0 0 8px var(--success);
         animation: pulseDot 2s infinite;
     }
-
     @keyframes pulseDot {
         0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
+        50% { opacity: 0.4; transform: scale(0.8); }
     }
 
-    .key-container {
-        background: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(0, 242, 254, 0.2);
-        border-radius: 18px;
-        padding: 20px;
+    /* Contador de Natal */
+    .christmas-banner {
+        background: linear-gradient(135deg, rgba(239, 68, 68, 0.12), rgba(16, 185, 129, 0.08));
+        border: 1px solid rgba(239, 68, 68, 0.25);
+        border-radius: 16px;
+        padding: 12px 16px;
         text-align: center;
         margin-bottom: 18px;
-        position: relative;
-        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    .christmas-banner span {
+        display: block;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: #f87171;
+        margin-bottom: 4px;
+    }
+    .christmas-banner strong {
+        font-size: 15px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+    }
+
+    /* Caixa da Key */
+    .key-container {
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 16px;
+        padding: 16px;
+        text-align: center;
+        margin-bottom: 14px;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
     }
 
     .key-label {
@@ -198,7 +257,7 @@
         color: var(--text-dim);
         letter-spacing: 1.5px;
         font-weight: 800;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .key-value {
@@ -207,15 +266,16 @@
         color: #ffffff;
         letter-spacing: 2px;
         word-break: break-all;
-        text-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+        text-shadow: 0 0 10px rgba(239, 68, 68, 0.4);
     }
 
+    /* Botão Principal Vermelho */
     .btn-main {
         width: 100%;
-        background: linear-gradient(135deg, #00f2fe, #7b2cbf);
-        color: #ffffff;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: #fff;
         border: none;
-        border-radius: 16px;
+        border-radius: 14px;
         padding: 16px;
         font-size: 14px;
         font-weight: 800;
@@ -223,21 +283,21 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 6px 20px rgba(0, 242, 254, 0.3);
+        gap: 8px;
+        transition: all 0.25s ease;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
         text-transform: uppercase;
         letter-spacing: 1px;
     }
 
     .btn-main:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 28px rgba(0, 242, 254, 0.5);
-        filter: brightness(1.1);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
+        filter: brightness(1.08);
     }
 
     .btn-main:active {
-        transform: translateY(-1px);
+        transform: translateY(0);
     }
 
     .msg {
@@ -246,22 +306,22 @@
         font-weight: 700;
         color: var(--success);
         min-height: 18px;
-        margin-top: 12px;
-        letter-spacing: 0.5px;
+        margin-top: 10px;
     }
 
+    /* Grid de Informações */
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 18px;
+        gap: 10px;
+        margin-top: 16px;
     }
 
     .stat-card {
-        background: rgba(255, 255, 255, 0.03);
+        background: rgba(255, 255, 255, 0.02);
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 14px;
+        border-radius: 14px;
+        padding: 12px;
         text-align: left;
     }
 
@@ -271,12 +331,12 @@
         color: var(--text-dim);
         text-transform: uppercase;
         font-weight: 700;
-        letter-spacing: 0.8px;
-        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
     }
 
     .stat-card strong {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--text-sub);
         font-weight: 700;
     }
@@ -285,47 +345,48 @@
         color: var(--warning);
     }
 
+    /* Redes Sociais */
     .social-links {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        margin-top: 16px;
+        gap: 10px;
+        margin-top: 14px;
     }
 
     .social-btn {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 12px;
+        border-radius: 12px;
+        padding: 10px;
         text-align: center;
         text-decoration: none;
         color: var(--text-sub);
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
         transition: all 0.2s ease;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 6px;
     }
 
     .social-btn:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: #ffffff;
-        border-color: rgba(255, 255, 255, 0.2);
-        transform: translateY(-2px);
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--text-main);
+        border-color: rgba(239, 68, 68, 0.3);
     }
 
     .footer {
         text-align: center;
-        margin-top: 24px;
+        margin-top: 20px;
         font-size: 10px;
         color: var(--text-dim);
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
         font-weight: 800;
         text-transform: uppercase;
     }
 
+    /* Tela de Loading */
     .loading {
         position: fixed;
         inset: 0;
@@ -339,13 +400,13 @@
     }
 
     .spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(255, 255, 255, 0.08);
+        width: 38px;
+        height: 38px;
+        border: 3px solid rgba(239, 68, 68, 0.1);
         border-top-color: var(--primary);
         border-radius: 50%;
         animation: spin 0.7s linear infinite;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
     }
 
     .loading p {
@@ -363,23 +424,33 @@
 </head>
 <body>
 
+<!-- Efeito de luz do mouse -->
+<div class="mouse-glow" id="mouseGlow"></div>
+
 <div class="ambient-glow glow-1"></div>
 <div class="ambient-glow glow-2"></div>
-<div class="particles" id="particles"></div>
+<div class="particles" id="snowParticles"></div>
 
 <div class="container">
     <div class="card">
         <div class="header-box">
+            <div class="badge-top">🎄 Especial de Natal</div>
             <img src="https://i.pinimg.com/736x/6e/c6/08/6ec6082652cf3caeb3cdc52c5d3ab553.jpg" alt="Vortex" class="logo-img">
             <h1 class="title">VORTEX <span>KEY</span></h1>
             <div class="subtitle">Gerador Automático de Chaves</div>
         </div>
 
-        <div style="text-align: center;">
+        <div class="status-wrapper">
             <div class="status-badge">
                 <div class="status-dot"></div>
-                <span>GERADOR ATIVO</span>
+                <span>SISTEMA ONLINE</span>
             </div>
+        </div>
+
+        <!-- Contador para o Natal no Brasil -->
+        <div class="christmas-banner">
+            <span>🎁 Faltam para o Natal (Brasil)</span>
+            <strong id="christmasCountdown">Calculando...</strong>
         </div>
 
         <div class="key-container">
@@ -388,8 +459,8 @@
         </div>
 
         <button class="btn-main" id="copyBtn" onclick="copyKey()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-            Copiar Chave
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar Key
         </button>
         <div class="msg" id="msg"></div>
 
@@ -407,7 +478,7 @@
                 <strong id="userIp">Carregando...</strong>
             </div>
             <div class="stat-card">
-                <span>Status</span>
+                <span>Status ID</span>
                 <strong style="color: var(--success)">Ativada</strong>
             </div>
         </div>
@@ -429,7 +500,7 @@
 
 <div class="loading" id="loading">
     <div class="spinner"></div>
-    <p id="loadingText">GERANDO SUA CHAVE...</p>
+    <p id="loadingText">CONECTANDO AO SERVIDOR...</p>
 </div>
 
 <script>
@@ -441,19 +512,74 @@ function setLoadMsg(msg) {
     if(el) el.textContent = msg;
 }
 
-// Partículas animadas de fundo
-const particlesContainer = document.getElementById("particles");
-for(let i = 0; i < 22; i++) {
-    const p = document.createElement("div");
-    p.className = "particle";
-    p.style.left = Math.random() * 100 + "%";
-    p.style.animationDuration = (6 + Math.random() * 8) + "s";
-    p.style.animationDelay = -(Math.random() * 10) + "s";
-    const size = (2 + Math.random() * 3) + "px";
-    p.style.width = size;
-    p.style.height = size;
-    particlesContainer.appendChild(p);
+// Detecção de Mouse para efeito de brilho em volta do cursor (Computador)
+const mouseGlow = document.getElementById("mouseGlow");
+let isDesktop = window.matchMedia("(pointer: fine)").matches;
+
+if (isDesktop) {
+    window.addEventListener("mousemove", (e) => {
+        mouseGlow.style.opacity = "1";
+        mouseGlow.style.left = e.clientX + "px";
+        mouseGlow.style.top = e.clientY + "px";
+    });
+    window.addEventListener("mouseleave", () => {
+        mouseGlow.style.opacity = "0";
+    });
 }
+
+// Criação do efeito de Neve (Natal)
+const snowContainer = document.getElementById("snowParticles");
+const totalSnowflakes = window.innerWidth < 600 ? 25 : 45;
+
+for(let i = 0; i < totalSnowflakes; i++) {
+    const flake = document.createElement("div");
+    flake.className = "particle";
+    flake.style.left = Math.random() * 100 + "%";
+    flake.style.top = -10 + "px";
+    
+    const size = (2 + Math.random() * 3.5) + "px";
+    flake.style.width = size;
+    flake.style.height = size;
+    
+    const duration = (5 + Math.random() * 7) + "s";
+    flake.style.animationDuration = duration;
+    flake.style.animationDelay = -(Math.random() * 10) + "s";
+    
+    snowContainer.appendChild(flake);
+}
+
+// Contador Regressivo para o Natal no Brasil (Fuso horário de Brasília - UTC-3)
+function updateChristmasCountdown() {
+    const now = new Date();
+    // Ajusta para o horário do Brasil (Brasília)
+    const brazilTimeOffset = -3 * 60;
+    const localUtc = now.getTime() + (now.getTimezoneOffset() * 60000);
+    const brazilNow = new Date(localUtc + (3600000 * brazilTimeOffset));
+    
+    let currentYear = brazilNow.getFullYear();
+    // Natal (25 de Dezembro às 00:00:00)
+    let christmasDate = new Date(currentYear, 11, 25, 0, 0, 0);
+    
+    if (brazilNow > christmasDate) {
+        christmasDate = new Date(currentYear + 1, 11, 25, 0, 0, 0);
+    }
+    
+    const diff = christmasDate - brazilNow;
+    
+    if (diff <= 0) {
+        document.getElementById("christmasCountdown").textContent = "🎄 É NATAL HOJE! 🎅";
+        return;
+    }
+    
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById("christmasCountdown").textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+setInterval(updateChristmasCountdown, 1000);
+updateChristmasCountdown();
 
 function generateUID() {
     return "UID_" + crypto.randomUUID().replace(/-/g, "").slice(0, 12);
@@ -571,13 +697,12 @@ async function verifyAndLoadKey() {
         const ip = await getIpAndValidate();
         if (!ip) return; 
 
-        setLoadMsg("REGISTRANDO NO NOOXSUB...");
+        setLoadMsg("GERANDO NOVA KEY...");
         const newKey = generateKey();
         const uid = generateUID(); 
         const generatedAt = new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
         const expireTime = now + ONE_DAY_MS;
 
-        // Estrutura salva em usuariosT para compatibilidade total com seus painéis/APIs
         const payloadData = {
             key: newKey,
             validade: "1",
@@ -600,7 +725,7 @@ async function verifyAndLoadKey() {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ key: newKey, expireTime, generatedAt })
-            }).catch(e => console.log("Erro ao salvar trava de IP:", e));
+            }).catch(e => console.log("Erro ao salvar trava IP:", e));
 
             await incrementVisitasTotal();
         }
@@ -615,7 +740,7 @@ async function verifyAndLoadKey() {
 
         document.getElementById("keyText").textContent = newKey;
         document.getElementById("time").textContent = generatedAt;
-        document.getElementById("msg").textContent = "KEY AUTOMÁTICA GERADA COM SUCESSO!";
+        document.getElementById("msg").textContent = "KEY GERADA COM SUCESSO!";
         
         startCountdown(expireTime);
         hideLoading();

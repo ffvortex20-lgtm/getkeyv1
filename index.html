@@ -2,1020 +2,472 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VORTEX | Key System</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>VORTEX HUB • Get Key</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',Arial,sans-serif;
-}
-
-:root{
-    --red:#ff1744;
-    --red-dark:#d50036;
-    --black:#050507;
-}
-
-body{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-    color:#fff;
-    overflow-x:hidden;
-
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(255,0,55,.18),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 10% 90%,
-            rgba(255,0,55,.10),
-            transparent 30%
-        ),
-        #050507;
-}
-
-/* =========================
-   MOUSE GLOW & FUNDO
-========================= */
-
-.mouse-glow {
-    position: fixed;
-    width: 450px;
-    height: 450px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255,23,68,.15) 0%, rgba(255,23,68,.02) 50%, transparent 70%);
-    pointer-events: none;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-    transition: opacity 0.3s ease;
-    opacity: 0;
-}
-
-.background{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index: 0;
-}
-
-.grid{
-    position:absolute;
-    width:200%;
-    height:100%;
-    left:-50%;
-    bottom:-35%;
-
-    background-image:
-        linear-gradient(
-            rgba(255,23,68,.08) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,23,68,.08) 1px,
-            transparent 1px
-        );
-
-    background-size:45px 45px;
-
-    transform:
-        perspective(500px)
-        rotateX(60deg);
-
-    animation:gridMove 12s linear infinite;
-}
-
-@keyframes gridMove{
-    from{
-        transform:
-            perspective(500px)
-            rotateX(60deg)
-            translateY(0);
+    :root {
+        --bg-deep: #030305;
+        --surface: #0a0b10;
+        --surface-glass: rgba(10, 11, 16, 0.85);
+        --border: rgba(255, 255, 255, 0.08);
+        --border-red: rgba(239, 68, 68, 0.35);
+        
+        --primary: #ef4444;
+        --primary-hover: #dc2626;
+        --primary-glow: rgba(239, 68, 68, 0.45);
+        
+        --text-main: #ffffff;
+        --text-sub: #9ca3af;
+        --text-dim: #6b7280;
+        
+        --success: #10b981;
+        --warning: #f59e0b;
     }
 
-    to{
-        transform:
-            perspective(500px)
-            rotateX(60deg)
-            translateY(45px);
-    }
-}
-
-.glow{
-    position:absolute;
-    width:420px;
-    height:420px;
-    background:#ff003c;
-    border-radius:50%;
-    filter:blur(170px);
-    opacity:.12;
-    animation:glowMove 8s ease-in-out infinite alternate;
-}
-
-@keyframes glowMove{
-    from{
-        transform:translate(-100px,-100px);
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    to{
-        transform:translate(300px,200px);
+    body {
+        background-color: var(--bg-deep);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        position: relative;
+        overflow-x: hidden;
     }
-}
 
-/* =========================
-   PARTICULAS (NEVE)
-========================= */
-
-.particles{
-    position:absolute;
-    inset:0;
-    z-index: 2;
-}
-
-.particle{
-    position:absolute;
-    width:3px;
-    height:3px;
-    border-radius:50%;
-    background:#ffffff;
-    box-shadow:0 0 8px #ffffff;
-    animation:particleMove linear infinite;
-}
-
-@keyframes particleMove{
-    from{
-        transform:translateY(110vh);
-        opacity:0;
+    /* Efeito de iluminação no fundo */
+    .ambient-glow {
+        position: fixed;
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        filter: blur(140px);
+        z-index: 0;
+        pointer-events: none;
     }
-    15%{
-        opacity:.8;
+    .glow-1 {
+        top: -150px;
+        left: -150px;
+        background: rgba(239, 68, 68, 0.18);
     }
-    85%{
-        opacity:.8;
+    .glow-2 {
+        bottom: -150px;
+        right: -150px;
+        background: rgba(220, 38, 38, 0.12);
     }
-    to{
-        transform:translateY(-10vh);
-        opacity:0;
+
+    /* Neve Natalina Animada */
+    .particles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
     }
-}
-
-/* =========================
-   PAPAI NOEL NA LATERAL
-========================= */
-
-.santa-helper {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(12, 12, 16, 0.9);
-    border: 1px solid rgba(255, 23, 68, 0.4);
-    padding: 10px 18px;
-    border-radius: 50px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 25px rgba(255, 23, 68, 0.3);
-    animation: floatSanta 3.5s ease-in-out infinite;
-    backdrop-filter: blur(12px);
-}
-.santa-avatar {
-    font-size: 28px;
-    animation: waveHand 1.6s ease-in-out infinite;
-    transform-origin: 70% 70%;
-    display: inline-block;
-}
-.santa-content {
-    display: flex;
-    flex-direction: column;
-}
-.santa-title {
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #ff1744;
-    text-transform: uppercase;
-}
-.santa-speech {
-    font-size: 11px;
-    font-weight: 700;
-    color: #ffffff;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-}
-
-@keyframes waveHand {
-    0% { transform: rotate(0deg); }
-    20% { transform: rotate(18deg); }
-    40% { transform: rotate(-10deg); }
-    60% { transform: rotate(18deg); }
-    80% { transform: rotate(-5deg); }
-    100% { transform: rotate(0deg); }
-}
-@keyframes floatSanta {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-}
-
-@media(max-width: 600px){
-    .santa-helper { bottom: 15px; right: 15px; padding: 8px 14px; }
-    .santa-avatar { font-size: 24px; }
-    .santa-speech { font-size: 10px; }
-}
-
-/* =========================
-   CARD
-========================= */
-
-.card{
-    position:relative;
-    width:100%;
-    max-width:420px;
-    padding:32px;
-    border-radius:24px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(20,20,25,.88),
-            rgba(8,8,11,.88)
-        );
-
-    border:1px solid rgba(255,23,68,.35);
-
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
-
-    box-shadow:
-        0 30px 90px rgba(0,0,0,.7),
-        0 0 60px rgba(255,0,55,.08);
-
-    text-align:center;
-    animation:cardEnter .7s cubic-bezier(.2,.8,.2,1);
-    z-index:5;
-}
-
-@keyframes cardEnter{
-    from{
-        opacity:0;
-        transform:
-            translateY(30px)
-            scale(.94);
+    .particle {
+        position: absolute;
+        background: #ffffff;
+        border-radius: 50%;
+        opacity: 0.65;
+        animation: fallSnow linear infinite;
     }
-    to{
-        opacity:1;
-        transform:
-            translateY(0)
-            scale(1);
+    @keyframes fallSnow {
+        0% { transform: translateY(-10vh) translateX(0); }
+        50% { transform: translateY(50vh) translateX(20px); }
+        100% { transform: translateY(105vh) translateX(-20px); }
     }
-}
 
-/* =========================
-   LOGO
-========================= */
-
-.logo{
-    width:70px;
-    height:70px;
-    margin:0 auto 18px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-radius:20px;
-    font-size:25px;
-    font-weight:800;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ff1744,
-            #a9002d
-        );
-
-    box-shadow:
-        0 0 35px rgba(255,23,68,.4),
-        inset 0 1px rgba(255,255,255,.3);
-
-    animation:logoPulse 3s ease-in-out infinite;
-}
-
-@keyframes logoPulse{
-    0%,100%{
-        box-shadow:
-            0 0 25px rgba(255,23,68,.25);
+    /* Container Principal */
+    .container {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 480px;
     }
-    50%{
-        box-shadow:
-            0 0 50px rgba(255,23,68,.55);
+
+    .card {
+        background: var(--surface-glass);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid var(--border-red);
+        border-radius: 32px;
+        padding: 42px 32px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.85), 0 0 50px rgba(239, 68, 68, 0.15);
+        position: relative;
+        overflow: hidden;
     }
-}
 
-/* =========================
-   TAG
-========================= */
-
-.tag{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    padding:7px 13px;
-    border-radius:50px;
-    background:rgba(255,23,68,.08);
-    border:1px solid rgba(255,23,68,.25);
-    color:#ff5473;
-    font-size:10px;
-    font-weight:800;
-    letter-spacing:1.5px;
-    margin-bottom:12px;
-}
-
-.tag::before{
-    content:"";
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#ff1744;
-    box-shadow:0 0 10px #ff1744;
-}
-
-/* =========================
-   TITULO
-========================= */
-
-.title{
-    font-size:24px;
-    font-weight:800;
-    letter-spacing:-.7px;
-    margin-bottom:8px;
-}
-
-.subtitle{
-    color:#85858d;
-    font-size:12px;
-    line-height:1.6;
-    margin-bottom:18px;
-}
-
-/* =========================
-   CONTADOR DE NATAL
-========================= */
-
-.christmas-banner{
-    background:rgba(255,23,68,0.06);
-    border:1px solid rgba(255,23,68,0.25);
-    border-radius:12px;
-    padding:10px 14px;
-    text-align:center;
-    margin-bottom:18px;
-}
-.christmas-banner span{
-    display:block;
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:1.2px;
-    text-transform:uppercase;
-    color:#ff5473;
-    margin-bottom:3px;
-}
-.christmas-banner strong{
-    font-size:13px;
-    font-weight:800;
-    color:#ffffff;
-}
-
-/* =========================
-   KEY
-========================= */
-
-.key-box{
-    padding:19px 15px;
-    border-radius:14px;
-    background:rgba(0,0,0,.65);
-    border:1px dashed rgba(255,23,68,.55);
-    color:#fff;
-    font-family:monospace;
-    font-size:15px;
-    letter-spacing:2px;
-    word-break:break-all;
-    margin-bottom:13px;
-    transition:.25s;
-}
-
-.key-box:hover{
-    border-color:#ff1744;
-    box-shadow:
-        0 0 25px rgba(255,23,68,.12),
-        inset 0 0 25px rgba(255,23,68,.05);
-}
-
-/* =========================
-   STATUS
-========================= */
-
-.status{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:7px;
-    color:#777780;
-    font-size:10px;
-    margin-bottom:18px;
-}
-
-.status-dot{
-    width:6px;
-    height:6px;
-    border-radius:50%;
-    background:#20e070;
-    box-shadow:0 0 10px #20e070;
-    animation:statusPulse 1.5s infinite;
-}
-
-@keyframes statusPulse{
-    50%{
-        opacity:.35;
-        transform:scale(.7);
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, var(--primary), transparent);
     }
-}
 
-/* =========================
-   BOTÕES
-========================= */
-
-.btn{
-    position:relative;
-    overflow:hidden;
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:13px;
-    cursor:pointer;
-    color:#fff;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:.6px;
-    transition:.2s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-}
-
-.btn:active{
-    transform:scale(.97);
-}
-
-/* copiar */
-
-.btn-copy{
-    background:
-        linear-gradient(
-            135deg,
-            #ff1744,
-            #d50036
-        );
-    box-shadow:0 8px 28px rgba(255,0,55,.25);
-    margin-bottom:12px;
-}
-
-.btn-copy:hover{
-    box-shadow:0 12px 40px rgba(255,0,55,.4);
-}
-
-/* brilho */
-
-.btn::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:-120%;
-    width:60%;
-    height:100%;
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,255,255,.25),
-            transparent
-        );
-    transform:skewX(-20deg);
-}
-
-.btn:hover::before{
-    animation:shine .7s;
-}
-
-@keyframes shine{
-    to{
-        left:140%;
+    /* Header & Avatar */
+    .header-box {
+        text-align: center;
+        margin-bottom: 24px;
     }
-}
 
-/* =========================
-   CANAL WHATSAPP
-========================= */
-
-.channel-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    text-decoration:none;
-    background:rgba(255,255,255,.025);
-    border:1px solid rgba(255,23,68,.35);
-    color:#fff;
-    box-shadow:0 0 20px rgba(255,23,68,.05);
-}
-
-.channel-btn:hover{
-    border-color:#ff1744;
-    background:rgba(255,23,68,.08);
-    box-shadow:0 0 30px rgba(255,23,68,.16);
-}
-
-.whatsapp-icon{
-    width:27px;
-    height:27px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#25D366;
-    color:white;
-    font-size:15px;
-    box-shadow:0 0 15px rgba(37,211,102,.25);
-}
-
-.channel-text{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-start;
-}
-
-.channel-title{
-    font-size:11px;
-    font-weight:800;
-}
-
-.channel-subtitle{
-    margin-top:2px;
-    color:#777780;
-    font-size:9px;
-}
-
-/* =========================
-   INFO
-========================= */
-
-.info{
-    margin-top:20px;
-    padding-top:18px;
-    border-top:1px solid rgba(255,255,255,.06);
-    color:#777780;
-    font-size:11px;
-    line-height:1.8;
-}
-
-.info b{
-    color:#fff;
-}
-
-/* =========================
-   SUCESSO
-========================= */
-
-.success{
-    background:
-        linear-gradient(
-            135deg,
-            #00c853,
-            #00a844
-        ) !important;
-    box-shadow:0 8px 30px rgba(0,200,83,.3) !important;
-}
-
-/* =========================
-   MANUTENÇÃO
-========================= */
-
-.maintenance-icon{
-    width:70px;
-    height:70px;
-    margin:0 auto 18px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    background:rgba(255,23,68,.08);
-    border:1px solid rgba(255,23,68,.25);
-    animation:maintenance 2s infinite;
-}
-
-@keyframes maintenance{
-    0%,90%,100%{
-        transform:rotate(0);
+    .badge-top {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        padding: 7px 16px;
+        border-radius: 30px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--primary);
+        letter-spacing: 2px;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
     }
-    93%{
-        transform:rotate(-5deg);
-    }
-    96%{
-        transform:rotate(5deg);
-    }
-}
 
-.hidden{
-    display:none !important;
-}
+    .logo-img {
+        width: 86px;
+        height: 86px;
+        border-radius: 24px;
+        object-fit: cover;
+        border: 2px solid rgba(239, 68, 68, 0.5);
+        background: #0d0e14;
+        margin: 0 auto 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(239, 68, 68, 0.35);
+        padding: 2px;
+    }
 
-@media(max-width:480px){
-    .card{
-        padding:26px 20px;
+    .title {
+        font-size: 28px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text-main);
+        margin-bottom: 6px;
     }
-    .title{
-        font-size:21px;
+
+    .title span {
+        color: var(--primary);
+        text-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
     }
-    .key-box{
-        font-size:13px;
+
+    .subtitle {
+        font-size: 13px;
+        color: var(--text-dim);
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
     }
-}
+
+    /* Progresso dos Passos */
+    .progress-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 24px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        padding: 10px 18px;
+        border-radius: 20px;
+    }
+    .progress-step {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 10px var(--primary-glow);
+    }
+    .progress-text {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        color: var(--text-sub);
+        text-transform: uppercase;
+    }
+
+    /* Caixa de Instrução */
+    .instruction-card {
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 18px;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .instruction-card h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 6px;
+    }
+    .instruction-card p {
+        font-size: 13px;
+        color: var(--text-sub);
+        line-height: 1.5;
+    }
+
+    /* Caixa de Alerta */
+    .warning-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        background: rgba(245, 158, 11, 0.08);
+        border: 1px solid rgba(245, 158, 11, 0.3);
+        border-radius: 16px;
+        padding: 14px 16px;
+        margin-bottom: 22px;
+    }
+    .warning-box svg {
+        color: var(--warning);
+        flex-shrink: 0;
+        margin-top: 2px;
+    }
+    .warning-content strong {
+        display: block;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1px;
+        color: var(--warning);
+        text-transform: uppercase;
+        margin-bottom: 2px;
+    }
+    .warning-content span {
+        font-size: 12px;
+        color: var(--text-sub);
+        line-height: 1.4;
+    }
+
+    /* Botão Principal */
+    .btn-main {
+        width: 100%;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: #fff;
+        border: none;
+        border-radius: 16px;
+        padding: 18px;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.25s ease;
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.45);
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+    }
+
+    .btn-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 35px rgba(239, 68, 68, 0.65);
+        filter: brightness(1.1);
+    }
+
+    .btn-main:active {
+        transform: translateY(0);
+    }
+
+    .btn-main.loading {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+    /* Links Sociais */
+    .social-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 22px;
+    }
+
+    .social-btn {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px;
+        text-align: center;
+        text-decoration: none;
+        color: var(--text-sub);
+        font-size: 12px;
+        font-weight: 700;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .social-btn:hover {
+        background: rgba(239, 68, 68, 0.12);
+        color: var(--text-main);
+        border-color: rgba(239, 68, 68, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    @keyframes spin {
+        100% { transform: rotate(360deg); }
+    }
 </style>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
 </head>
-
 <body>
 
-<!-- Efeito de luz do mouse -->
-<div class="mouse-glow" id="mouseGlow"></div>
+<div class="ambient-glow glow-1"></div>
+<div class="ambient-glow glow-2"></div>
+<div class="particles" id="snowParticles"></div>
 
-<div class="background">
-    <div class="grid"></div>
-    <div class="glow"></div>
-    <div class="particles" id="particles"></div>
-</div>
+<div class="container">
+    <div class="card">
+        <div class="header-box">
+            <div class="badge-top">⚡ Sistema de Key</div>
+            <img src="https://i.pinimg.com/736x/6e/c6/08/6ec6082652cf3caeb3cdc52c5d3ab553.jpg" alt="Vortex Logo" class="logo-img">
+            <h1 class="title">VORTEX <span>HUB</span></h1>
+            <div class="subtitle">Obtenha seu Acesso Gratuito</div>
+        </div>
 
-<!-- Papai Noel na lateral animado -->
-<div class="santa-helper">
-    <div class="santa-avatar">🎅</div>
-    <div class="santa-content">
-        <span class="santa-title">Papai Noel</span>
-        <span class="santa-speech">Ho Ho Ho! Tchau! 👋</span>
-    </div>
-</div>
+        <div class="progress-box">
+            <div class="progress-step">1</div>
+            <span class="progress-text">Passo 1 de 1</span>
+        </div>
 
-<!-- TELA PRINCIPAL -->
-<div id="main-view" class="card">
-    <div class="logo">
-        VTX
-    </div>
+        <div class="instruction-card">
+            <h3>Primeira Etapa</h3>
+            <p>Para continuar, clique no botão abaixo para desbloquear o sistema. Você será redirecionado para a validação e retornará com sua Key pronta.</p>
+        </div>
 
-    <div class="tag">
-        🎄 VORTEX KEY SYSTEM ONLINE
-    </div>
+        <div class="warning-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div class="warning-content">
+                <strong>Aviso de Segurança</strong>
+                <span>O uso de bots ou automações causará o banimento imediato da sua chave no app.</span>
+            </div>
+        </div>
 
-    <div class="title">
-        Sua Key está pronta
-    </div>
+        <button class="btn-main" id="getKeyBtn" onclick="clicarPegarKey()">
+            Prosseguir para a Etapa
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+        </button>
 
-    <div class="subtitle">
-        Copie sua chave de acesso e utilize-a no aplicativo.
-    </div>
+        <div class="social-grid">
+            <a href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" class="social-btn">
+                💬 WhatsApp
+            </a>
+            <a href="https://discord.gg/FEkBTeZ5j" target="_blank" class="social-btn">
+                🎮 Discord
+            </a>
+        </div>
 
-    <!-- Contador de Natal -->
-    <div class="christmas-banner">
-        <span>🎁 Faltam para o Natal (Brasil)</span>
-        <strong id="christmasCountdown">Calculando...</strong>
-    </div>
-
-    <div class="key-box" id="key-display">
-        Carregando...
-    </div>
-
-    <div class="status">
-        <span class="status-dot"></span>
-        SISTEMA OPERACIONAL
-    </div>
-
-    <!-- COPIAR -->
-    <button class="btn btn-copy" id="btn-copy" onclick="copyKey()">
-        ⧉ &nbsp; COPIAR KEY
-    </button>
-
-    <!-- CANAL -->
-    <a class="btn channel-btn" href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" rel="noopener noreferrer">
-        <span class="whatsapp-icon">
-            💬
-        </span>
-        <span class="channel-text">
-            <span class="channel-title">
-                CANAL DE ATUALIZAÇÕES
-            </span>
-            <span class="channel-subtitle">
-                Receba novidades e atualizações
-            </span>
-        </span>
-        <span style="margin-left:auto;font-size:18px;">
-            ›
-        </span>
-    </a>
-
-    <div class="info" id="validity-display">
-        Verificando validade...
-    </div>
-</div>
-
-<!-- MANUTENÇÃO -->
-<div id="maintenance-view" class="card hidden">
-    <div class="maintenance-icon">
-        ⚙
-    </div>
-    <div class="tag">
-        SYSTEM OFFLINE
-    </div>
-    <div class="title" style="color:#ff365d">
-        Em manutenção
-    </div>
-    <div class="subtitle" style="margin-bottom:0">
-        Nosso sistema está temporariamente indisponível.
-        <br><br>
-        Tente novamente mais tarde.
+        <div class="footer">
+            Developed by Vortex Hub
+        </div>
     </div>
 </div>
 
 <script>
+const SHORTENER_URL = "https://prospexurl.com.br/r/getkey1";
+const FIREBASE_URL = "https://nooxsub-default-rtdb.firebaseio.com";
 
-/* =========================
-   MOUSE GLOW EFFECT
-========================= */
+// Partículas de neve/fundo
+const snowContainer = document.getElementById("snowParticles");
+const totalSnowflakes = window.innerWidth < 600 ? 25 : 45;
 
-const mouseGlow = document.getElementById("mouseGlow");
-let isDesktop = window.matchMedia("(pointer: fine)").matches;
-
-if (isDesktop && mouseGlow) {
-    window.addEventListener("mousemove", (e) => {
-        mouseGlow.style.opacity = "1";
-        mouseGlow.style.left = e.clientX + "px";
-        mouseGlow.style.top = e.clientY + "px";
-    });
-    window.addEventListener("mouseleave", () => {
-        mouseGlow.style.opacity = "0";
-    });
+for(let i = 0; i < totalSnowflakes; i++) {
+    const flake = document.createElement("div");
+    flake.className = "particle";
+    flake.style.left = Math.random() * 100 + "%";
+    flake.style.top = -10 + "px";
+    
+    const size = (2 + Math.random() * 3) + "px";
+    flake.style.width = size;
+    flake.style.height = size;
+    
+    const duration = (5 + Math.random() * 7) + "s";
+    flake.style.animationDuration = duration;
+    flake.style.animationDelay = -(Math.random() * 10) + "s";
+    
+    snowContainer.appendChild(flake);
 }
 
-/* =========================
-   PARTICULAS (NEVE)
-========================= */
-
-const particles = document.getElementById("particles");
-const totalSnow = window.innerWidth < 600 ? 25 : 45;
-
-for(let i = 0; i < totalSnow; i++){
-    const p = document.createElement("div");
-    p.className = "particle";
-    p.style.left = Math.random() * 100 + "%";
-    p.style.animationDuration = (5 + Math.random() * 8) + "s";
-    p.style.animationDelay = (-Math.random() * 10) + "s";
-    p.style.opacity = Math.random();
-    const size = (2 + Math.random() * 2.5) + "px";
-    p.style.width = size;
-    p.style.height = size;
-    particles.appendChild(p);
-}
-
-
-/* =========================
-   CONTADOR DE NATAL NO BRASIL
-========================= */
-
-function updateChristmasCountdown() {
-    const now = new Date();
-    const brazilTimeOffset = -3 * 60;
-    const localUtc = now.getTime() + (now.getTimezoneOffset() * 60000);
-    const brazilNow = new Date(localUtc + (3600000 * brazilTimeOffset));
+// Lógica de Registro de IP e Redirecionamento
+async function clicarPegarKey() {
+    const btn = document.getElementById("getKeyBtn");
+    btn.classList.add("loading");
+    btn.innerHTML = `Processando... <svg style="animation: spin 1s linear infinite" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
     
-    let currentYear = brazilNow.getFullYear();
-    let christmasDate = new Date(currentYear, 11, 25, 0, 0, 0);
+    let ip = "127_0_0_1";
+    let countryCode = "BR";
     
-    if (brazilNow > christmasDate) {
-        christmasDate = new Date(currentYear + 1, 11, 25, 0, 0, 0);
+    try {
+        const res = await fetch("https://api.ipify.org?format=json");
+        const data = await res.json();
+        if(data && data.ip) {
+            ip = data.ip;
+        }
+    } catch (e) {
+        console.warn("Aviso ao buscar IP, usando padrão.");
     }
     
-    const diff = christmasDate - brazilNow;
-    
-    if (diff <= 0) {
-        document.getElementById("christmasCountdown").textContent = "🎄 É NATAL HOJE! 🎅";
-        return;
+    localStorage.setItem("vtx_country", countryCode);
+    localStorage.setItem("vtx_ip", ip);
+
+    const safeIpKey = ip.replace(/\./g, "_");
+
+    try {
+        await fetch(`${FIREBASE_URL}/visitas/ips/${safeIpKey}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                ip: ip,
+                country: countryCode,
+                timestamp: new Date().toISOString()
+            })
+        });
+    } catch (e) {
+        console.warn("Aviso ao salvar visita no Firebase.");
     }
     
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    document.getElementById("christmasCountdown").textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    // Redireciona para o encurtador
+    window.location.href = SHORTENER_URL;
 }
-setInterval(updateChristmasCountdown, 1000);
-updateChristmasCountdown();
-
-
-/* =========================
-   SONS (WEB AUDIO API)
-========================= */
-
-let audioCtx = null;
-
-function sound(type){
-    try{
-        if(!audioCtx){
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        }
-
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        if(type === "click"){
-            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(850, audioCtx.currentTime + .08);
-
-            gain.gain.setValueAtTime(.0001, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(.08, audioCtx.currentTime + .01);
-            gain.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .12);
-
-            osc.start();
-            osc.stop(audioCtx.currentTime + .12);
-        }
-
-        if(type === "success"){
-            osc.frequency.setValueAtTime(500, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(1000, audioCtx.currentTime + .15);
-
-            gain.gain.setValueAtTime(.0001, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(.12, audioCtx.currentTime + .02);
-            gain.gain.exponentialRampToValueAtTime(.0001, audioCtx.currentTime + .3);
-
-            osc.start();
-            osc.stop(audioCtx.currentTime + .3);
-        }
-    }catch(e){}
-}
-
-
-/* =========================
-   FIREBASE (NOOXSUB)
-========================= */
-
-const firebaseConfig = {
-    databaseURL: "https://nooxsub-default-rtdb.firebaseio.com"
-};
-
-firebase.initializeApp(firebaseConfig);
-
-const database = firebase.database();
-const configRef = database.ref("config");
-
-let rawDateStr = "";
-let timerInterval = null;
-
-configRef.on("value", (snapshot) => {
-    const data = snapshot.val();
-    if(!data) return;
-
-    const mainView = document.getElementById("main-view");
-    const maintenanceView = document.getElementById("maintenance-view");
-
-    if(data.maintenance === true || data.maintenance === "true"){
-        mainView.classList.add("hidden");
-        maintenanceView.classList.remove("hidden");
-    } else {
-        maintenanceView.classList.add("hidden");
-        mainView.classList.remove("hidden");
-
-        document.getElementById("key-display").innerText = data.current_key || "SEM KEY";
-        rawDateStr = data.expiration_date || "";
-
-        startCountdown();
-    }
-});
-
-
-/* =========================
-   CONTADOR DE VALIDADE DA KEY
-========================= */
-
-function startCountdown(){
-    if(timerInterval) clearInterval(timerInterval);
-
-    function updateTimer(){
-        const info = document.getElementById("validity-display");
-
-        if(!rawDateStr){
-            info.innerText = "Sem data de validade definida.";
-            return;
-        }
-
-        const numbers = rawDateStr.match(/\d+/g);
-
-        if(!numbers || numbers.length < 3){
-            info.innerText = "Válida até " + rawDateStr;
-            return;
-        }
-
-        const day = parseInt(numbers[0], 10);
-        const month = parseInt(numbers[1], 10) - 1;
-        const year = parseInt(numbers[2], 10);
-        const hour = numbers[3] ? parseInt(numbers[3],10) : 23;
-        const min = numbers[4] ? parseInt(numbers[4],10) : 59;
-
-        const targetDate = new Date(year, month, day, hour, min);
-        const now = new Date();
-        const diff = targetDate - now;
-
-        if(diff <= 0){
-            info.innerHTML = `
-                ${rawDateStr} restantes
-                <br>
-                <span style="color:#ff1744; font-weight:800;">
-                    ⚠ KEY EXPIRADA
-                </span>`;
-        } else {
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-            info.innerHTML = `
-                Válida até <b>${rawDateStr}</b>
-                <br>
-                Restam <b>${days}</b> dia(s), <b>${hours}</b> hora(s) e <b>${mins}</b> min(s).`;
-        }
-    }
-
-    updateTimer();
-    timerInterval = setInterval(updateTimer, 30000);
-}
-
-
-/* =========================
-   COPIAR KEY
-========================= */
-
-async function copyKey(){
-    const key = document.getElementById("key-display").innerText;
-
-    if(key === "Carregando..." || key === "SEM KEY") return;
-
-    sound("click");
-
-    try{
-        await navigator.clipboard.writeText(key);
-        showSuccess();
-    }catch(error){
-        const area = document.createElement("textarea");
-        area.value = key;
-        document.body.appendChild(area);
-        area.select();
-        document.execCommand("copy");
-        area.remove();
-        showSuccess();
-    }
-}
-
-
-/* =========================
-   SUCESSO AO COPIAR
-========================= */
-
-function showSuccess(){
-    const button = document.getElementById("btn-copy");
-
-    button.classList.add("success");
-    button.innerHTML = "✓ &nbsp; KEY COPIADA!";
-
-    sound("success");
-
-    setTimeout(() => {
-        button.classList.remove("success");
-        button.innerHTML = "⧉ &nbsp; COPIAR KEY";
-    }, 2200);
-}
-
 </script>
-
 </body>
 </html>

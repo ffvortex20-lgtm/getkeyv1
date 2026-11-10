@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VORTEX HUB • Get Key Automático</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --bg-deep: #060609;
+        --surface: #0d0e15;
+        --surface-glass: rgba(13, 14, 21, 0.85);
+        --border: rgba(255, 255, 255, 0.1);
+        
+        --primary: #00f2fe;
+        --primary-glow: rgba(0, 242, 254, 0.25);
+        --accent: #9d4edd;
+        
+        --text-main: #ffffff;
+        --text-sub: #a0aec0;
+        --text-dim: #64748b;
+        
+        --success: #10b981;
+        --warning: #f59e0b;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-deep);
+        color: var(--text-main);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    .ambient-glow {
+        position: fixed;
+        width: 380px;
+        height: 380px;
+        border-radius: 50%;
+        filter: blur(120px);
+        z-index: 0;
+        pointer-events: none;
+    }
+    .glow-1 {
+        top: -120px;
+        left: -120px;
+        background: rgba(157, 78, 221, 0.18);
+    }
+    .glow-2 {
+        bottom: -120px;
+        right: -120px;
+        background: rgba(0, 242, 254, 0.15);
+    }
+
+    .particles {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+    }
+    .particle {
+        position: absolute;
+        background: var(--primary);
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+        0% { transform: translateY(105vh) scale(0); opacity: 0; }
+        50% { opacity: 0.6; }
+        100% { transform: translateY(-5vh) scale(1); opacity: 0; }
+    }
+
+    .container {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        max-width: 440px;
+    }
+
+    .card {
+        background: var(--surface-glass);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: 36px 28px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 242, 254, 0.08);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
+    }
+
+    .header-box {
+        text-align: center;
+        margin-bottom: 24px;
+    }
+
+    .logo-img {
+        width: 76px;
+        height: 76px;
+        border-radius: 22px;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: #111118;
+        margin: 0 auto 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 242, 254, 0.2);
+        padding: 2px;
+    }
+
+    .title {
+        font-size: 24px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text-main);
+        margin-bottom: 4px;
+    }
+
+    .title span {
+        background: linear-gradient(135deg, #00f2fe, #9d4edd);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+        font-size: 11px;
+        color: var(--text-dim);
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+    }
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.25);
+        padding: 6px 14px;
+        border-radius: 30px;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--success);
+        margin-bottom: 24px;
+        letter-spacing: 0.5px;
+    }
+
+    .status-dot {
+        width: 7px;
+        height: 7px;
+        background-color: var(--success);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--success);
+        animation: pulseDot 2s infinite;
+    }
+
+    @keyframes pulseDot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .key-container {
+        background: rgba(0, 0, 0, 0.45);
+        border: 1px solid rgba(0, 242, 254, 0.2);
+        border-radius: 18px;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 18px;
+        position: relative;
+        box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .key-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        letter-spacing: 1.5px;
+        font-weight: 800;
+        margin-bottom: 8px;
+    }
+
+    .key-value {
+        font-size: 18px;
+        font-weight: 800;
+        color: #ffffff;
+        letter-spacing: 2px;
+        word-break: break-all;
+        text-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+    }
+
+    .btn-main {
+        width: 100%;
+        background: linear-gradient(135deg, #00f2fe, #7b2cbf);
+        color: #ffffff;
+        border: none;
+        border-radius: 16px;
+        padding: 16px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 6px 20px rgba(0, 242, 254, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .btn-main:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 242, 254, 0.5);
+        filter: brightness(1.1);
+    }
+
+    .btn-main:active {
+        transform: translateY(-1px);
+    }
+
+    .msg {
+        text-align: center;
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--success);
+        min-height: 18px;
+        margin-top: 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .stat-card {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 14px;
+        text-align: left;
+    }
+
+    .stat-card span {
+        display: block;
+        font-size: 10px;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+        margin-bottom: 6px;
+    }
+
+    .stat-card strong {
+        font-size: 13px;
+        color: var(--text-sub);
+        font-weight: 700;
+    }
+
+    .stat-card.highlight strong {
+        color: var(--warning);
+    }
+
+    .social-links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .social-btn {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px;
+        text-align: center;
+        text-decoration: none;
+        color: var(--text-sub);
+        font-size: 12px;
+        font-weight: 700;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .social-btn:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+        border-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 10px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .loading {
+        position: fixed;
+        inset: 0;
+        background: var(--bg-deep);
+        z-index: 99;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: opacity 0.3s ease;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255, 255, 255, 0.08);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        margin-bottom: 16px;
+    }
+
+    .loading p {
+        font-size: 11px;
+        color: var(--text-dim);
+        letter-spacing: 2px;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+</style>
+</head>
+<body>
+
+<div class="ambient-glow glow-1"></div>
+<div class="ambient-glow glow-2"></div>
+<div class="particles" id="particles"></div>
+
+<div class="container">
+    <div class="card">
+        <div class="header-box">
+            <img src="https://i.pinimg.com/736x/6e/c6/08/6ec6082652cf3caeb3cdc52c5d3ab553.jpg" alt="Vortex" class="logo-img">
+            <h1 class="title">VORTEX <span>KEY</span></h1>
+            <div class="subtitle">Gerador Automático de Chaves</div>
+        </div>
+
+        <div style="text-align: center;">
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                <span>GERADOR ATIVO</span>
+            </div>
+        </div>
+
+        <div class="key-container">
+            <div class="key-label">Sua Chave de Acesso</div>
+            <div class="key-value" id="keyText">GERANDO...</div>
+        </div>
+
+        <button class="btn-main" id="copyBtn" onclick="copyKey()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Copiar Chave
+        </button>
+        <div class="msg" id="msg"></div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>Gerada em</span>
+                <strong id="time">--:--</strong>
+            </div>
+            <div class="stat-card highlight">
+                <span>Expira em</span>
+                <strong id="countdown">Calculando...</strong>
+            </div>
+            <div class="stat-card">
+                <span>Seu IP</span>
+                <strong id="userIp">Carregando...</strong>
+            </div>
+            <div class="stat-card">
+                <span>Status</span>
+                <strong style="color: var(--success)">Ativada</strong>
+            </div>
+        </div>
+
+        <div class="social-links">
+            <a href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" class="social-btn">
+                💬 WhatsApp
+            </a>
+            <a href="https://t.me/vtxmdz" target="_blank" class="social-btn">
+                ✈ Telegram
+            </a>
+        </div>
+
+        <div class="footer">
+            Developed by Vortex Hub
+        </div>
+    </div>
+</div>
+
+<div class="loading" id="loading">
+    <div class="spinner"></div>
+    <p id="loadingText">GERANDO SUA CHAVE...</p>
+</div>
+
+<script>
+const ONE_DAY_MS = 1 * 24 * 60 * 60 * 1000; 
+const FIREBASE_URL = "https://nooxsub-default-rtdb.firebaseio.com";
+
+function setLoadMsg(msg) {
+    const el = document.getElementById("loadingText");
+    if(el) el.textContent = msg;
+}
+
+// Partículas animadas de fundo
+const particlesContainer = document.getElementById("particles");
+for(let i = 0; i < 22; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+    p.style.left = Math.random() * 100 + "%";
+    p.style.animationDuration = (6 + Math.random() * 8) + "s";
+    p.style.animationDelay = -(Math.random() * 10) + "s";
+    const size = (2 + Math.random() * 3) + "px";
+    p.style.width = size;
+    p.style.height = size;
+    particlesContainer.appendChild(p);
+}
+
+function generateUID() {
+    return "UID_" + crypto.randomUUID().replace(/-/g, "").slice(0, 12);
+}
+
+function generateKey(){
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let part = "";
+    for(let i = 0; i < 6; i++){
+        part += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return `VTX-${part}`;
+}
+
+let activeTimer = null;
+
+function startCountdown(expireTime) {
+    if (activeTimer) clearInterval(activeTimer);
+    activeTimer = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = expireTime - now;
+
+        if (distance < 0) {
+            clearInterval(activeTimer);
+            localStorage.removeItem("vtx_session_v58");
+            window.location.reload();
+            return;
+        }
+
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        
+        document.getElementById("countdown").textContent = `${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+}
+
+function hideLoading() {
+    const loader = document.getElementById("loading");
+    if (loader) {
+        loader.style.opacity = "0";
+        setTimeout(() => loader.style.display = "none", 300);
+    }
+}
+
+async function incrementVisitasTotal() {
+    try {
+        const res = await fetch(`${FIREBASE_URL}/visitas/total.json`);
+        let currentTotal = 0;
+        if (res.ok) {
+            const data = await res.json();
+            if (data !== null) currentTotal = parseInt(data);
+        }
+        
+        await fetch(`${FIREBASE_URL}/visitas/total.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(currentTotal + 1)
+        });
+    } catch(e) {
+        console.log("Erro ao atualizar total:", e);
+    }
+}
+
+async function getIpAndValidate() {
+    try {
+        const ipRes = await fetch("https://api.ipify.org?format=json");
+        const ipData = await ipRes.json();
+        const rawIp = ipData.ip;
+        const ip = rawIp.replace(/[.#$[\]]/g, "_");
+        document.getElementById("userIp").textContent = rawIp;
+
+        const lockRes = await fetch(`${FIREBASE_URL}/visitas/ips/${ip}.json`);
+        if (lockRes.ok) {
+            const lockData = await lockRes.json();
+            const now = new Date().getTime();
+
+            if (lockData && lockData.expireTime && lockData.expireTime > now) {
+                document.getElementById("keyText").textContent = lockData.key;
+                document.getElementById("time").textContent = lockData.generatedAt;
+                startCountdown(lockData.expireTime);
+                hideLoading();
+
+                localStorage.setItem('vtx_session_v58', JSON.stringify({
+                    key: lockData.key,
+                    generatedAt: lockData.generatedAt,
+                    ip: rawIp,
+                    expireTime: lockData.expireTime
+                }));
+                return null; 
+            }
+        }
+        return ip;
+    } catch(e) { 
+        document.getElementById("userIp").textContent = "DESCONHECIDO";
+        return "IP_DESCONHECIDO_" + Math.floor(Math.random() * 1000); 
+    }
+}
+
+async function verifyAndLoadKey() {
+    try {
+        const now = new Date().getTime();
+
+        const sessionData = JSON.parse(localStorage.getItem('vtx_session_v58') || "null");
+        if (sessionData && sessionData.expireTime > now) {
+            document.getElementById("keyText").textContent = sessionData.key;
+            document.getElementById("time").textContent = sessionData.generatedAt || "--";
+            document.getElementById("userIp").textContent = sessionData.ip || "Local";
+            startCountdown(sessionData.expireTime);
+            hideLoading();
+            return; 
+        }
+
+        setLoadMsg("OBTENDO SEU IP...");
+        const ip = await getIpAndValidate();
+        if (!ip) return; 
+
+        setLoadMsg("REGISTRANDO NO NOOXSUB...");
+        const newKey = generateKey();
+        const uid = generateUID(); 
+        const generatedAt = new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+        const expireTime = now + ONE_DAY_MS;
+
+        // Estrutura salva em usuariosT para compatibilidade total com seus painéis/APIs
+        const payloadData = {
+            key: newKey,
+            validade: "1",
+            dias: "1",
+            dispositivos: "1",
+            device: "",
+            status: "ativada",
+            uid: uid,
+            criador: "GERADOR_AUTOMATICO"
+        };
+
+        await fetch(`${FIREBASE_URL}/usuariosT/${uid}.json`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payloadData)
+        });
+
+        if (!ip.startsWith("IP_DESCONHECIDO")) {
+            await fetch(`${FIREBASE_URL}/visitas/ips/${ip}.json`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ key: newKey, expireTime, generatedAt })
+            }).catch(e => console.log("Erro ao salvar trava de IP:", e));
+
+            await incrementVisitasTotal();
+        }
+
+        const rawIp = ip.startsWith("IP_DESCONHECIDO") ? "Oculto" : ip.replace(/_/g, ".");
+        localStorage.setItem('vtx_session_v58', JSON.stringify({
+            key: newKey,
+            generatedAt,
+            ip: rawIp,
+            expireTime
+        }));
+
+        document.getElementById("keyText").textContent = newKey;
+        document.getElementById("time").textContent = generatedAt;
+        document.getElementById("msg").textContent = "KEY AUTOMÁTICA GERADA COM SUCESSO!";
+        
+        startCountdown(expireTime);
+        hideLoading();
+
+    } catch (e) {
+        setLoadMsg("ERRO AO CONECTAR");
+        setTimeout(hideLoading, 1500);
+    }
+}
+
+function triggerSuccess() {
+    document.getElementById("msg").textContent = "KEY COPIADA COM SUCESSO!";
+    setTimeout(() => {
+        document.getElementById("msg").textContent = "";
+    }, 3000);
+}
+
+function copyKey(){
+    const k = document.getElementById("keyText").textContent;
+    if(!k || k === "GERANDO..." || k === "ERRO AO CONECTAR") return;
+    
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(k).then(triggerSuccess).catch(() => fallbackCopy(k));
+    } else {
+        fallbackCopy(k);
+    }
+}
+
+function fallbackCopy(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        if (document.execCommand('copy')) triggerSuccess();
+    } catch (err) {}
+    document.body.removeChild(textArea);
+}
+
+verifyAndLoadKey();
+</script>
+</body>
+</html>

@@ -1,417 +1,219 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#080808">
 <title>VORTEX HUB • Get Key</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-    :root {
-        --bg-color: #050505;
-        --card-bg: #121212;
-        --text-main: #ffffff;
-        --text-muted: #888888;
-        --border-color: #222222;
-        --btn-bg: #ffffff;
-        --btn-text: #000000;
-        --icon-bg: #1a1a1a;
-        --warning-bg: rgba(255, 170, 0, 0.05);
-        --warning-border: rgba(255, 170, 0, 0.2);
-        --warning-text: #ffaa00;
-    }
-
-    [data-theme="light"] {
-        --bg-color: #f7f7f7;
-        --card-bg: #ffffff;
-        --text-main: #000000;
-        --text-muted: #666666;
-        --border-color: #e5e5e5;
-        --btn-bg: #1f1f1f;
-        --btn-text: #ffffff;
-        --icon-bg: #eeeeee;
-        --warning-bg: #fffcf5;
-        --warning-border: #f5e6c4;
-        --warning-text: #cc8800;
-    }
-
-    * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: 'Inter', sans-serif;
-        -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-        background-color: var(--bg-color);
-        color: var(--text-main);
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 24px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    /* Botão de Tema */
-    .theme-toggle {
-        position: absolute;
-        top: 24px;
-        right: 24px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background-color: var(--icon-bg);
-        border: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: var(--text-main);
-        transition: all 0.2s ease;
-    }
-    .theme-toggle:hover {
-        transform: scale(1.05);
-    }
-
-    /* Container Principal */
-    .container {
-        width: 100%;
-        max-width: 420px;
-        margin-top: 60px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Cabeçalho */
-    .header {
-        text-align: center;
-        margin-bottom: 32px;
-    }
-    .header .icon-wrapper {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        background-color: var(--icon-bg);
-        border: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 24px;
-        color: var(--text-muted);
-    }
-    .header h1 {
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        letter-spacing: -0.5px;
-    }
-    .header p {
-        font-size: 14px;
-        color: var(--text-muted);
-        line-height: 1.5;
-    }
-
-    /* Barra de Progresso */
-    .progress {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 24px;
-    }
-    .progress .step-num {
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        border: 1px solid var(--border-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: 600;
-        color: var(--text-muted);
-    }
-    .progress .step-text {
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        color: var(--text-muted);
-    }
-    .progress .line {
-        flex: 1;
-        height: 1px;
-        background-color: var(--border-color);
-    }
-    .progress .dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        border: 1px solid var(--border-color);
-    }
-
-    /* Cartão Principal */
-    .card {
-        background-color: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: 20px;
-        padding: 24px;
-        transition: all 0.3s ease;
-    }
-    .card h2 {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 12px;
-    }
-    .card p {
-        font-size: 14px;
-        color: var(--text-muted);
-        line-height: 1.6;
-        margin-bottom: 24px;
-    }
-
-    /* Aviso de Segurança */
-    .warning-box {
-        display: flex;
-        gap: 12px;
-        background-color: var(--warning-bg);
-        border: 1px solid var(--warning-border);
-        border-radius: 12px;
-        padding: 16px;
-        margin-bottom: 24px;
-    }
-    .warning-box svg {
-        color: var(--warning-text);
-        flex-shrink: 0;
-        margin-top: 2px;
-    }
-    .warning-content {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-    }
-    .warning-content strong {
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        color: var(--warning-text);
-        text-transform: uppercase;
-    }
-    .warning-content span {
-        font-size: 13px;
-        color: var(--text-muted);
-        line-height: 1.5;
-    }
-
-    /* Botão Principal */
-    .btn {
-        width: 100%;
-        background-color: var(--btn-bg);
-        color: var(--btn-text);
-        border: none;
-        border-radius: 12px;
-        padding: 16px;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: transform 0.2s ease, opacity 0.2s ease;
-        text-decoration: none;
-        margin-bottom: 12px;
-    }
-    .btn:hover {
-        opacity: 0.9;
-        transform: translateY(-2px);
-    }
-    .btn:active {
-        transform: translateY(0);
-    }
-
-    /* Estilo para os Botões Sociais/VIP */
-    .btn-discord {
-        background-color: #5865F2;
-        color: #ffffff;
-    }
-    .btn-whatsapp {
-        background-color: #25D366;
-        color: #ffffff;
-    }
-
-    /* Links Sociais e Footer */
-    .social-links {
-        margin-top: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .footer {
-        margin-top: 24px;
-        text-align: center;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 2px;
-        color: var(--text-muted);
-        text-transform: uppercase;
-    }
-
-    .btn.loading {
-        opacity: 0.7;
-        pointer-events: none;
-    }
-    
-    @keyframes spin { 100% { transform: rotate(360deg); } }
+:root{--bg:#050505;--card:#121212;--text:#fff;--muted:#888;--border:#222;--btn:#fff;--btntext:#000;--icon:#1a1a1a;--warning:rgba(255,170,0,.05);--warningborder:rgba(255,170,0,.2);--warningtext:#ffaa00}
+[data-theme=light]{--bg:#f7f7f7;--card:#fff;--text:#000;--muted:#666;--border:#e5e5e5;--btn:#1f1f1f;--btntext:#fff;--icon:#eee;--warning:#fffcf5;--warningborder:#f5e6c4;--warningtext:#cc8800}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px;transition:.3s}
+.theme-toggle{position:absolute;top:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--icon);border:1px solid var(--border);display:grid;place-items:center;cursor:pointer;color:var(--text)}
+.container{width:100%;max-width:420px;margin-top:60px;display:flex;flex-direction:column}
+.header{text-align:center;margin-bottom:32px}
+.icon-wrapper{width:72px;height:72px;border-radius:50%;background:var(--icon);border:1px solid var(--border);display:grid;place-items:center;margin:0 auto 24px;color:var(--muted)}
+.header h1{font-size:28px;font-weight:700;margin-bottom:12px;letter-spacing:-.5px}
+.header p{font-size:14px;color:var(--muted);line-height:1.5}
+.progress{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.step-num{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);display:grid;place-items:center;font-size:12px;color:var(--muted)}
+.step-text{font-size:11px;font-weight:600;letter-spacing:1px;color:var(--muted)}
+.line{flex:1;height:1px;background:var(--border)}
+.dot{width:6px;height:6px;border-radius:50%;border:1px solid var(--border)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:24px;transition:.3s}
+.card h2{font-size:18px;margin-bottom:12px}
+.card p{font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.warning-box{display:flex;gap:12px;background:var(--warning);border:1px solid var(--warningborder);border-radius:12px;padding:16px;margin-bottom:24px}
+.warning-box svg{color:var(--warningtext);flex-shrink:0}
+.warning-content{display:flex;flex-direction:column;gap:4px}
+.warning-content strong{font-size:11px;letter-spacing:.5px;color:var(--warningtext)}
+.warning-content span{font-size:13px;color:var(--muted);line-height:1.5}
+.btn{width:100%;background:var(--btn);color:var(--btntext);border:0;border-radius:12px;padding:16px;font-size:15px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s;text-decoration:none;margin-bottom:12px}
+.btn:hover{opacity:.9;transform:translateY(-2px)}
+.btn-discord{background:#5865F2;color:white}
+.btn-whatsapp{background:#25D366;color:white}
+.social-links{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.footer{margin-top:24px;text-align:center;font-size:10px;font-weight:600;letter-spacing:2px;color:var(--muted)}
+.btn.loading{opacity:.7;pointer-events:none}
+#message{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-
-<!-- Botão de Trocar Tema -->
-<button class="theme-toggle" onclick="toggleTheme()" aria-label="Trocar Tema">
-    <svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Trocar tema">
+<svg id="theme-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+</svg>
 </button>
 
 <div class="container">
-    <!-- Header -->
-    <div class="header">
-        <div class="icon-wrapper">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
-            </svg>
-        </div>
-        <h1>Get a Free Key</h1>
-        <p>Complete the step below to receive your access key</p>
-    </div>
+<header class="header">
+<div class="icon-wrapper">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+</svg>
+</div>
+<h1>Get a Free Key</h1>
+<p>Complete the step below to receive your access key</p>
+</header>
 
-    <!-- Progresso -->
-    <div class="progress">
-        <span class="step-num">1</span>
-        <span class="step-text">STEP 1 OF 1</span>
-        <div class="line"></div>
-        <span class="dot"></span>
-    </div>
+<div class="progress">
+<span class="step-num">1</span><span class="step-text">STEP 1 OF 1</span><div class="line"></div><span class="dot"></span>
+</div>
 
-    <!-- Cartão Principal -->
-    <main class="card">
-        <h2>First Step</h2>
-        <p>To continue, click the button below to complete the first step. You will be redirected and then return to this page once finished.</p>
-        
-        <div class="warning-box">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                <polyline points="9 12 11 14 15 10"></polyline>
-            </svg>
-            <div class="warning-content">
-                <strong>Security Notice</strong>
-                <span>The use of bots or any kind of automation will result in your key being banned.</span>
-            </div>
-        </div>
+<main class="card">
+<h2>First Step</h2>
+<p>To continue, click the button below to complete the first step. You will be redirected and then return to this page once finished.</p>
+<div class="warning-box">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>
+</svg>
+<div class="warning-content">
+<strong>Security Notice</strong>
+<span>The use of bots or any kind of automation will result in your key being banned.</span>
+</div>
+</div>
+<button class="btn" id="getKeyBtn" onclick="clicarPegarKey()">
+Continue to Step
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+</button>
+<div id="message"></div>
+</main>
 
-        <button class="btn" id="getKeyBtn" onclick="clicarPegarKey()">
-            Continue to Step
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-        </button>
-    </main>
-
-    <!-- Socials & Footer -->
-    <div class="social-links">
-        <a href="https://discord.gg/FEkBTeZ5j" target="_blank" class="btn btn-discord">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 5h-12a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3z"></path><circle cx="9" cy="12" r="1"></circle><circle cx="15" cy="12" r="1"></circle></svg>
-            Produtos VIP (Discord)
-        </a>
-        <a href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" class="btn btn-whatsapp">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            Canal WhatsApp Oficial
-        </a>
-    </div>
-
-    <div class="footer">
-        DEVELOPED BY VORTEX HUB
-    </div>
+<div class="social-links">
+<a href="https://discord.gg/FEkBTeZ5j" target="_blank" rel="noopener noreferrer" class="btn btn-discord">🎮 Produtos VIP (Discord)</a>
+<a href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">💬 Canal WhatsApp Oficial</a>
+</div>
+<div class="footer">DEVELOPED BY VORTEX HUB</div>
 </div>
 
 <script>
-const SHORTENER_URL = "https://prospexurl.com.br/r/getkey1";
-const FIREBASE_URL = "https://nooxsub-default-rtdb.firebaseio.com";
+const SHORTENER_URL="https://prospexurl.com.br/r/getkey";
+const FIREBASE_URL="https://nooxsub-default-rtdb.firebaseio.com";
+const ONE_DAY_MS=24*60*60*1000;
+const FLOW_KEY="vtx_shortener_flow_v1";
 
-// Lógica do Tema Claro/Escuro
-function toggleTheme() {
-    const body = document.body;
-    const isLight = body.getAttribute("data-theme") === "light";
-    const icon = document.getElementById("theme-icon");
-    
-    if (isLight) {
-        body.removeAttribute("data-theme");
-        localStorage.setItem("vtx_theme", "dark");
-        icon.innerHTML = `<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>`;
-    } else {
-        body.setAttribute("data-theme", "light");
-        localStorage.setItem("vtx_theme", "light");
-        icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
-    }
+function toggleTheme(){
+ const light=document.body.getAttribute("data-theme")==="light";
+ const icon=document.getElementById("theme-icon");
+ if(light){
+  document.body.removeAttribute("data-theme");
+  localStorage.setItem("vtx_theme","dark");
+  icon.innerHTML='<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+ }else{
+  document.body.setAttribute("data-theme","light");
+  localStorage.setItem("vtx_theme","light");
+  icon.innerHTML='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+ }
+}
+if(localStorage.getItem("vtx_theme")==="light")toggleTheme();
+
+function safeIP(ip){return ip.replace(/[.#$/\[\]]/g,"_")}
+function generateKey(){
+ const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+ const values=new Uint32Array(6);
+ crypto.getRandomValues(values);
+ let result="VTX-";
+ for(let i=0;i<6;i++)result+=chars[values[i]%chars.length];
+ return result;
+}
+function generateFlowId(){
+ const bytes=new Uint8Array(20);
+ crypto.getRandomValues(bytes);
+ return Array.from(bytes,b=>b.toString(16).padStart(2,"0")).join("");
+}
+async function firebase(path,options={}){
+ const response=await fetch(FIREBASE_URL+"/"+path+".json",{
+  ...options,
+  headers:{"Content-Type":"application/json",...(options.headers||{})}
+ });
+ if(!response.ok)throw new Error("Firebase respondeu com erro HTTP "+response.status);
+ return response.json();
+}
+async function getIP(){
+ const response=await fetch("https://api.ipify.org?format=json",{cache:"no-store"});
+ if(!response.ok)throw new Error("Não foi possível identificar seu IP.");
+ const data=await response.json();
+ if(!data.ip)throw new Error("IP não identificado.");
+ return data.ip;
 }
 
-// Verifica preferência salva do tema
-if(localStorage.getItem("vtx_theme") === "light") {
-    toggleTheme();
-}
+async function clicarPegarKey(){
+ const btn=document.getElementById("getKeyBtn");
+ const message=document.getElementById("message");
+ if(btn.disabled)return;
 
-// Lógica de Registro de IP na Firebase e Redirecionamento
-async function clicarPegarKey() {
-    const btn = document.getElementById("getKeyBtn");
-    btn.classList.add("loading");
-    btn.innerHTML = `Processando... <svg style="animation: spin 1s linear infinite" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>`;
-    
-    let ip = "127_0_0_1";
-    let countryCode = "BR";
-    
-    try {
-        const res = await fetch("https://api.ipify.org?format=json");
-        const data = await res.json();
-        if(data && data.ip) {
-            ip = data.ip;
-        }
-    } catch (e) {
-        console.warn("Aviso ao buscar IP, usando padrão.");
-    }
-    
-    localStorage.setItem("vtx_country", countryCode);
-    localStorage.setItem("vtx_ip", ip);
+ btn.disabled=true;
+ btn.classList.add("loading");
+ btn.textContent="Preparando seu acesso...";
 
-    const safeIpKey = ip.replace(/\./g, "_");
+ try{
+  if(location.protocol!=="https:" && location.hostname!=="localhost"){
+   throw new Error("Acesse pelo endereço HTTPS oficial.");
+  }
 
-    try {
-        await fetch(`${FIREBASE_URL}/visitas/ips/${safeIpKey}.json`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                ip: ip,
-                country: countryCode,
-                timestamp: new Date().toISOString()
-            })
-        });
-    } catch (e) {
-        console.warn("Aviso ao salvar visita no Firebase.");
-    }
-    
-    // Redireciona para o encurtador
-    window.location.href = SHORTENER_URL;
+  const ip=await getIP();
+  const ipSafe=safeIP(ip);
+  const now=Date.now();
+  const expireTime=now+ONE_DAY_MS;
+  const key=generateKey();
+  const flowId=generateFlowId();
+
+  const record={
+   ip,
+   country:"BR",
+   key,
+   expireTime,
+   createdAt:now,
+   timestamp:new Date(now).toISOString(),
+   flowId,
+   flowStatus:"pending"
+  };
+
+  /*
+   PATCH atualiza os campos sem apagar outros dados
+   que já existam no registro do IP.
+  */
+  await firebase("visitas/ips/"+ipSafe,{
+   method:"PATCH",
+   body:JSON.stringify(record)
+  });
+
+  const confirmation=await firebase("visitas/ips/"+ipSafe);
+  if(!confirmation || confirmation.key!==key ||
+     confirmation.flowId!==flowId ||
+     Number(confirmation.expireTime)!==expireTime){
+   throw new Error("Não foi possível confirmar o registro da sua key.");
+  }
+
+  /*
+   sessionStorage acompanha a navegação na mesma aba.
+   O key.html exige este identificador para validar o retorno.
+  */
+  sessionStorage.setItem(FLOW_KEY,JSON.stringify({
+   ip,
+   flowId,
+   createdAt:now
+  }));
+
+  localStorage.setItem("vtx_ip",ip);
+  localStorage.setItem("vtx_country","BR");
+
+  message.textContent="Registro criado. Redirecionando...";
+  btn.textContent="Redirecionando...";
+  window.location.assign(SHORTENER_URL);
+
+ }catch(error){
+  console.error(error);
+  message.textContent=error.message||"Erro ao preparar sua key. Tente novamente.";
+  btn.disabled=false;
+  btn.classList.remove("loading");
+  btn.textContent="Tentar novamente";
+ }
 }
 </script>
 </body>

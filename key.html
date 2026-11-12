@@ -11,875 +11,464 @@
 
 <style>
 :root {
- --red:#ff1744;
- --red2:#ff496b;
- --green:#4dff83;
- --bg:#07070a;
- --card:#101015;
- --panel:#08080c;
- --text:#fff;
- --muted:#85858f;
+ --red:#ff1744;--red2:#ff496b;--green:#4dff83;
+ --bg:#07070a;--card:#101015;--panel:#08080c;
+ --text:#fff;--muted:#85858f;
  --border:rgba(255,255,255,.09);
  --soft:rgba(255,255,255,.035);
  --ease:cubic-bezier(.16,1,.3,1);
 }
-
-body.light {
- --bg:#f1f2f6;
- --card:#fff;
- --panel:#f5f5f8;
- --text:#191920;
- --muted:#777783;
- --border:rgba(0,0,0,.10);
- --soft:rgba(0,0,0,.035);
+body.light{
+ --bg:#f1f2f6;--card:#fff;--panel:#f5f5f8;
+ --text:#191920;--muted:#777783;
+ --border:rgba(0,0,0,.10);--soft:rgba(0,0,0,.035);
 }
-
 *{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
-
-body {
+body{
  min-height:100vh;
- background:
- radial-gradient(ellipse at 50% -15%,rgba(255,23,68,.15),transparent 55%),
- var(--bg);
- color:var(--text);
- padding:25px 14px;
- display:flex;
- justify-content:center;
- align-items:center;
- overflow-x:hidden;
+ background:radial-gradient(ellipse at 50% -15%,rgba(255,23,68,.15),transparent 55%),var(--bg);
+ color:var(--text);padding:25px 14px;display:flex;
+ justify-content:center;align-items:center;overflow-x:hidden;
  transition:background .35s,color .35s;
 }
-
-button,a{font-family:inherit}
-button{color:inherit}
+button,a{font-family:inherit}button{color:inherit}
 .is-hidden{display:none!important}
-
-/* BACKGROUND */
-
 .background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-
 .background:after{
- content:"";
- position:absolute;inset:0;
- background-image:
- linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),
- linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
+ content:"";position:absolute;inset:0;
+ background-image:linear-gradient(rgba(255,255,255,.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);
  background-size:48px 48px;
 }
-
-.glow{
- position:absolute;width:440px;height:440px;
- border-radius:50%;background:var(--red);
- filter:blur(180px);opacity:.12;
- animation:ambient 12s ease-in-out infinite alternate;
-}
+.glow{position:absolute;width:440px;height:440px;border-radius:50%;background:var(--red);filter:blur(180px);opacity:.12;animation:ambient 12s ease-in-out infinite alternate}
 .glow.one{top:-220px;left:-130px}
 .glow.two{bottom:-250px;right:-150px;animation-delay:-5s}
-
-@keyframes ambient{
- to{transform:translate(100px,80px) scale(1.2)}
-}
-
+@keyframes ambient{to{transform:translate(100px,80px) scale(1.2)}}
 .particles{position:absolute;inset:0;overflow:hidden}
-
-.particle{
- position:absolute;top:-15px;border-radius:50%;
- background:white;box-shadow:0 0 7px white;
- animation:snowfall linear infinite;
-}
-
-@keyframes snowfall{
- 0%{transform:translateY(-10px);opacity:0}
- 15%{opacity:.65}
- 100%{transform:translate(55px,110vh);opacity:0}
-}
-
-/* MAIN */
-
-.wrapper{
- position:relative;
- z-index:5;
- width:100%;
- max-width:790px;
- animation:enter .8s var(--ease);
-}
-
-@keyframes enter{
- from{opacity:0;transform:translateY(25px) scale(.98)}
- to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-.topbar{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:12px;
- margin-bottom:17px;
-}
-
-.brand{
- display:flex;align-items:center;gap:10px;
- font-size:16px;font-weight:800;letter-spacing:1px;
-}
-
-.brand-icon{
- width:38px;height:38px;border-radius:12px;
- display:grid;place-items:center;
- background:linear-gradient(145deg,#ff496b,#c50035);
- color:white;font-size:14px;
- box-shadow:0 5px 20px rgba(255,23,68,.25);
-}
-
+.particle{position:absolute;top:-15px;border-radius:50%;background:white;box-shadow:0 0 7px white;animation:snowfall linear infinite}
+@keyframes snowfall{0%{transform:translateY(-10px);opacity:0}15%{opacity:.65}100%{transform:translate(55px,110vh);opacity:0}}
+.wrapper{position:relative;z-index:5;width:100%;max-width:790px;animation:enter .8s var(--ease)}
+@keyframes enter{from{opacity:0;transform:translateY(25px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:17px}
+.brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;letter-spacing:1px}
+.brand-icon{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#ff496b,#c50035);color:white;font-size:14px;box-shadow:0 5px 20px rgba(255,23,68,.25)}
 .top-actions{display:flex;gap:8px}
-
-.theme-btn{
- border:1px solid var(--border);
- background:var(--card);
- padding:10px 14px;border-radius:11px;
- cursor:pointer;font-size:11px;font-weight:600;
- transition:.25s;
-}
-.theme-btn:hover{border-color:var(--red);transform:translateY(-2px)}
-
-.card{
- position:relative;
- padding:30px;
- border-radius:25px;
- background:var(--card);
- border:1px solid var(--border);
- box-shadow:0 30px 100px rgba(0,0,0,.35),0 0 45px rgba(255,23,68,.05);
- backdrop-filter:blur(25px);
- overflow:hidden;
- transition:background .3s,border .3s;
-}
-
-.card:before{
- content:"";position:absolute;top:0;left:18%;
- width:64%;height:2px;
- background:linear-gradient(90deg,transparent,var(--red),transparent);
- filter:drop-shadow(0 0 8px var(--red));
-}
-
-/* NAVIGATION */
-
-.nav{
- display:flex;gap:7px;
- padding:5px;
- background:var(--panel);
- border:1px solid var(--border);
- border-radius:14px;
- margin-bottom:27px;
-}
-
-.nav button{
- flex:1;border:0;background:transparent;
- border-radius:10px;padding:12px 8px;
- font-size:11px;font-weight:600;
- color:var(--muted);cursor:pointer;
- transition:.25s;
-}
-
+.theme-btn{width:64px;height:34px;border:1px solid var(--border);background:var(--card);border-radius:30px;cursor:pointer;position:relative;display:flex;align-items:center;justify-content:space-between;padding:0 7px;font-size:13px}
+.theme-ball{position:absolute;left:3px;top:3px;width:26px;height:26px;border-radius:50%;background:linear-gradient(145deg,#ff496b,#c50035);display:grid;place-items:center;transition:.3s;box-shadow:0 2px 8px #0004}
+body.light .theme-ball{transform:translateX(30px)}
+.card{position:relative;padding:30px;border-radius:25px;background:var(--card);border:1px solid var(--border);box-shadow:0 30px 100px rgba(0,0,0,.35),0 0 45px rgba(255,23,68,.05);backdrop-filter:blur(25px);overflow:hidden;transition:background .3s,border .3s}
+.card:before{content:"";position:absolute;top:0;left:18%;width:64%;height:2px;background:linear-gradient(90deg,transparent,var(--red),transparent);filter:drop-shadow(0 0 8px var(--red))}
+.nav{display:flex;gap:7px;padding:5px;background:var(--panel);border:1px solid var(--border);border-radius:14px;margin-bottom:27px}
+.nav button{flex:1;border:0;background:transparent;border-radius:10px;padding:12px 8px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer;transition:.25s}
 .nav button:hover{color:var(--text);background:var(--soft)}
-
-.nav button.active{
- color:white;
- background:linear-gradient(110deg,#ff1744,#cf0039);
- box-shadow:0 5px 18px rgba(255,23,68,.2);
-}
-
+.nav button.active{color:white;background:linear-gradient(110deg,#ff1744,#cf0039);box-shadow:0 5px 18px rgba(255,23,68,.2)}
 .page{display:none;animation:pageIn .45s var(--ease)}
 .page.active{display:block}
-
-@keyframes pageIn{
- from{opacity:0;transform:translateY(10px)}
- to{opacity:1;transform:translateY(0)}
-}
-
-/* LOGO / TEXT */
-
-.logo{
- width:75px;height:75px;margin:0 auto 17px;
- display:flex;align-items:center;justify-content:center;
- border-radius:22px;font-size:24px;font-weight:800;
- color:white;background:linear-gradient(145deg,#ff496b,#c50035);
- box-shadow:0 10px 35px rgba(255,23,68,.26);
- animation:float 4s ease-in-out infinite;
-}
-
+@keyframes pageIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.logo{width:75px;height:75px;margin:0 auto 17px;display:flex;align-items:center;justify-content:center;border-radius:22px;font-size:24px;font-weight:800;color:white;background:linear-gradient(145deg,#ff496b,#c50035);box-shadow:0 10px 35px rgba(255,23,68,.26);animation:float 4s ease-in-out infinite}
 @keyframes float{50%{transform:translateY(-5px)}}
-
-.tag{
- display:inline-flex;align-items:center;gap:8px;
- padding:8px 14px;border-radius:30px;
- background:rgba(255,23,68,.07);
- border:1px solid rgba(255,23,68,.20);
- color:#ff718a;font-size:10px;
- font-weight:600;letter-spacing:1px;
- margin-bottom:16px;
-}
-
-.tag:before{
- content:"";width:6px;height:6px;
- background:var(--red);border-radius:50%;
- box-shadow:0 0 10px var(--red);
-}
-
-.title{
- font-size:26px;font-weight:800;
- letter-spacing:-.7px;margin-bottom:9px;
- background:linear-gradient(100deg,var(--text),#ff8299,var(--text));
- background-size:200%;
- -webkit-background-clip:text;
- -webkit-text-fill-color:transparent;
- animation:titleShine 6s linear infinite;
-}
-
+.tag{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:30px;background:rgba(255,23,68,.07);border:1px solid rgba(255,23,68,.20);color:#ff718a;font-size:10px;font-weight:600;letter-spacing:1px;margin-bottom:16px}
+.tag:before{content:"";width:6px;height:6px;background:var(--red);border-radius:50%;box-shadow:0 0 10px var(--red)}
+.title{font-size:26px;font-weight:800;letter-spacing:-.7px;margin-bottom:9px;background:linear-gradient(100deg,var(--text),#ff8299,var(--text));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:titleShine 6s linear infinite}
 @keyframes titleShine{to{background-position:200%}}
-
-.subtitle{
- color:var(--muted);font-size:12px;
- line-height:1.8;margin-bottom:23px;
-}
-
-/* KEY AREA */
-
+.subtitle{color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:23px}
 .key-content{max-width:470px;margin:auto;text-align:center}
-
-.loader{
- background:var(--panel);
- border:1px solid var(--border);
- border-radius:18px;
- padding:20px;
- margin-bottom:17px;
- text-align:left;
- box-shadow:0 15px 40px rgba(0,0,0,.12);
-}
-
+.loader{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:17px;text-align:left;box-shadow:0 15px 40px rgba(0,0,0,.12)}
 .loader-head{display:flex;align-items:center;gap:12px}
-
-.loader-icon{
- width:37px;height:37px;
- border-radius:12px;
- background:rgba(255,23,68,.1);
- display:grid;place-items:center;font-size:17px;
-}
-
+.loader-icon{width:37px;height:37px;border-radius:12px;background:rgba(255,23,68,.1);display:grid;place-items:center;font-size:17px}
 .loader-title{font-size:13px;font-weight:700}
 .loader-subtitle{font-size:10px;color:var(--muted);margin-top:3px}
-
-.loader-meta{
- display:flex;justify-content:space-between;
- margin-top:17px;font-size:12px;font-weight:700;
-}
-
+.loader-meta{display:flex;justify-content:space-between;margin-top:17px;font-size:12px;font-weight:700}
 #loaderPct{color:var(--red)}
-
-.seekbar{
- height:13px;border-radius:20px;
- background:rgba(130,130,140,.2);
- margin-top:10px;overflow:hidden;
-}
-
-.seekbar-fill{
- height:100%;width:0;
- border-radius:20px;
- background:linear-gradient(90deg,#ff496b,#ff1744);
- box-shadow:0 0 15px rgba(255,23,68,.5);
- transition:width .12s linear;
- position:relative;
-}
-
-.seekbar-fill:after{
- content:"";position:absolute;inset:0;
- background:repeating-linear-gradient(-45deg,transparent 0 7px,rgba(255,255,255,.2) 7px 12px);
- animation:stripes .7s linear infinite;
-}
-
+.seekbar{height:13px;border-radius:20px;background:rgba(130,130,140,.2);margin-top:10px;overflow:hidden}
+.seekbar-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,#ff496b,#ff1744);box-shadow:0 0 15px rgba(255,23,68,.5);transition:width .12s linear;position:relative}
+.seekbar-fill:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent 0 7px,rgba(255,255,255,.2) 7px 12px);animation:stripes .7s linear infinite}
 @keyframes stripes{to{background-position:17px 0}}
-
-.loader-msg{
- color:var(--muted);font-size:10px;
- margin-top:12px;min-height:17px;
-}
-
-.steps{
- display:flex;justify-content:space-between;
- margin-top:14px;gap:4px;
-}
-
-.step-dot{
- width:7px;height:7px;border-radius:50%;
- background:rgba(130,130,140,.3);
- transition:.3s;
-}
-
-.step-dot.done{
- background:var(--red);
- box-shadow:0 0 8px var(--red);
-}
-
-.generate-btn{
- width:100%;padding:15px;
- border:0;border-radius:13px;
- background:linear-gradient(115deg,#ff1744,#d50036);
- color:white;font-size:12px;font-weight:700;
- cursor:pointer;letter-spacing:.5px;
- box-shadow:0 8px 28px rgba(255,0,55,.25);
- transition:.25s;
-}
-
+.loader-msg{color:var(--muted);font-size:10px;margin-top:12px;min-height:17px}
+.steps{display:flex;justify-content:space-between;margin-top:14px;gap:4px}
+.step-dot{width:7px;height:7px;border-radius:50%;background:rgba(130,130,140,.3);transition:.3s}
+.step-dot.done{background:var(--red);box-shadow:0 0 8px var(--red)}
+.generate-btn{width:100%;padding:15px;border:0;border-radius:13px;background:linear-gradient(115deg,#ff1744,#d50036);color:white;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px;box-shadow:0 8px 28px rgba(255,0,55,.25);transition:.25s}
 .generate-btn:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(255,0,55,.4)}
 .generate-btn:active{transform:scale(.97)}
 .generate-btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-
-.key-box{
- padding:20px 12px;border-radius:15px;
- background:var(--panel);
- border:1px dashed rgba(255,23,68,.45);
- color:var(--text);
- font-family:'JetBrains Mono',monospace;
- font-size:19px;font-weight:700;
- letter-spacing:2px;word-break:break-all;
- margin:17px 0;
-}
-
-.status{
- display:flex;align-items:center;justify-content:center;
- gap:8px;color:var(--muted);
- font-size:10px;margin:15px 0;
-}
-
-.status-dot{
- width:7px;height:7px;border-radius:50%;
- background:#20e070;box-shadow:0 0 9px #20e070;
-}
-
-.copy-btn{
- width:100%;padding:14px;
- border:0;border-radius:12px;
- background:linear-gradient(115deg,#ff1744,#d50036);
- color:white;font-size:12px;font-weight:700;
- cursor:pointer;transition:.25s;
-}
+.key-box{padding:20px 12px;border-radius:15px;background:var(--panel);border:1px dashed rgba(255,23,68,.45);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;letter-spacing:2px;word-break:break-all;margin:17px 0}
+.status{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--muted);font-size:10px;margin:15px 0}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#20e070;box-shadow:0 0 9px #20e070}
+.copy-btn{width:100%;padding:14px;border:0;border-radius:12px;background:linear-gradient(115deg,#ff1744,#d50036);color:white;font-size:12px;font-weight:700;cursor:pointer;transition:.25s}
 .copy-btn:hover{transform:translateY(-2px)}
 .copy-btn.success{background:linear-gradient(120deg,#00c853,#00a844)}
-
-.validity{
- font-size:11px;color:var(--muted);
- line-height:2;margin-top:16px;
-}
-
-/* SOCIAL */
-
+.validity{font-size:11px;color:var(--muted);line-height:2;margin-top:16px}
 .socials{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
-
-.social-btn{
- text-decoration:none;color:var(--text);
- display:flex;align-items:center;gap:10px;
- border:1px solid var(--border);
- border-radius:13px;padding:12px;
- background:var(--soft);transition:.25s;
-}
+.social-btn{text-decoration:none;color:var(--text);display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:13px;padding:12px;background:var(--soft);transition:.25s}
 .social-btn:hover{border-color:var(--red);transform:translateY(-2px)}
-
-.social-icon{
- width:35px;height:35px;display:grid;place-items:center;
- border-radius:10px;background:rgba(255,23,68,.1);
- font-size:16px;
-}
-
+.social-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:10px;background:rgba(255,23,68,.1);font-size:16px}
 .social-text strong{display:block;font-size:10px}
 .social-text small{font-size:9px;color:var(--muted)}
-
-/* HOLIDAYS */
-
-.section-heading{
- text-align:center;margin-bottom:22px;
-}
-
+.section-heading{text-align:center;margin-bottom:22px}
 .section-heading h2{font-size:23px;font-weight:800}
 .section-heading p{font-size:11px;color:var(--muted);margin-top:7px}
-
-.christmas{
- position:relative;overflow:hidden;
- padding:24px;border-radius:18px;
- background:linear-gradient(120deg,rgba(255,23,68,.13),rgba(255,23,68,.025));
- border:1px solid rgba(255,23,68,.25);
- text-align:center;margin-bottom:20px;
-}
-
+.christmas{position:relative;overflow:hidden;padding:24px;border-radius:18px;background:linear-gradient(120deg,rgba(255,23,68,.13),rgba(255,23,68,.025));border:1px solid rgba(255,23,68,.25);text-align:center;margin-bottom:20px}
 .christmas .emoji{font-size:33px;margin-bottom:8px}
 .christmas h3{font-size:17px;color:var(--red2)}
 .christmas p{font-size:10px;color:var(--muted);margin-top:6px}
-.christmas strong{
- display:block;font-size:23px;
- margin-top:14px;font-variant-numeric:tabular-nums;
-}
-
-.holiday-grid{
- display:grid;grid-template-columns:repeat(2,1fr);gap:11px;
-}
-
-.holiday{
- background:var(--panel);
- border:1px solid var(--border);
- border-radius:14px;padding:15px;
- transition:.25s;
-}
+.christmas strong{display:block;font-size:23px;margin-top:14px;font-variant-numeric:tabular-nums}
+.holiday-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.holiday{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:15px;transition:.25s}
 .holiday:hover{border-color:rgba(255,23,68,.4);transform:translateY(-2px)}
 .holiday-icon{font-size:21px;margin-bottom:9px}
 .holiday-name{font-size:11px;font-weight:700}
 .holiday-date{font-size:9px;color:var(--muted);margin-top:4px}
 .holiday-count{font-size:12px;color:var(--red2);font-weight:700;margin-top:10px}
-
-/* HOME */
-
 .home-hero{text-align:center;padding:10px 0 22px}
-
-.home-stats{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:10px;margin-top:22px;
-}
-
-.stat{
- background:var(--panel);border:1px solid var(--border);
- border-radius:13px;padding:16px 8px;text-align:center;
-}
+.home-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:16px 8px;text-align:center}
 .stat strong{display:block;font-size:18px;color:var(--red2)}
 .stat small{font-size:9px;color:var(--muted)}
-
-.home-link{
- display:block;margin-top:18px;
- padding:14px;text-align:center;
- text-decoration:none;color:white;
- border-radius:12px;
- background:linear-gradient(115deg,#ff1744,#d50036);
- font-size:11px;font-weight:700;
-}
-
-/* FOOTER */
-
-.footer{
- text-align:center;color:var(--muted);
- font-size:9px;margin-top:22px;
- padding-top:17px;border-top:1px solid var(--border);
-}
-
-/* RESPONSIVE */
-
+.home-link{display:block;margin-top:18px;padding:14px;text-align:center;text-decoration:none;color:white;border-radius:12px;background:linear-gradient(115deg,#ff1744,#d50036);font-size:11px;font-weight:700}
+.footer{text-align:center;color:var(--muted);font-size:9px;margin-top:22px;padding-top:17px;border-top:1px solid var(--border)}
+.security-note{font-size:9px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.7}
 @media(max-width:550px){
- body{padding:14px 10px}
- .card{padding:22px 16px;border-radius:20px}
- .nav button{font-size:9px;padding:12px 4px}
- .title{font-size:23px}
- .holiday-grid{grid-template-columns:1fr 1fr}
- .socials{grid-template-columns:1fr}
- .topbar{margin-bottom:12px}
- .brand{font-size:13px}
- .theme-btn{font-size:10px;padding:9px}
- .key-box{font-size:15px}
+ body{padding:14px 10px}.card{padding:22px 16px;border-radius:20px}
+ .nav button{font-size:9px;padding:12px 4px}.title{font-size:23px}
+ .holiday-grid{grid-template-columns:1fr 1fr}.socials{grid-template-columns:1fr}
+ .topbar{margin-bottom:12px}.brand{font-size:13px}.key-box{font-size:15px}
 }
-
-@media(prefers-reduced-motion:reduce){
- *,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 
 <body>
-
 <div class="background">
- <div class="glow one"></div>
- <div class="glow two"></div>
+ <div class="glow one"></div><div class="glow two"></div>
  <div class="particles" id="particles"></div>
 </div>
 
 <div class="wrapper">
+<header class="topbar">
+ <div class="brand"><div class="brand-icon">VTX</div>VORTEX <span style="color:var(--red)">KEY SYSTEM</span></div>
+ <div class="top-actions">
+  <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Alternar tema">
+   <span>☀️</span><span class="theme-ball" id="themeBall">🌙</span>
+  </button>
+ </div>
+</header>
 
- <header class="topbar">
-  <div class="brand">
-   <div class="brand-icon">VTX</div>
-   VORTEX <span style="color:var(--red)">KEY SYSTEM</span>
+<main class="card">
+<nav class="nav">
+ <button onclick="openTab('home',this)">⌂ Início</button>
+ <button class="active" onclick="openTab('keys',this)">⚿ Key System</button>
+ <button onclick="openTab('holidays',this)">🎄 Natal & Feriados</button>
+</nav>
+
+<section class="page" id="home">
+ <div class="home-hero">
+  <div class="logo">VTX</div>
+  <div class="tag">VORTEX OFFICIAL SYSTEM</div>
+  <h1 class="title">Bem-vindo à VORTEX</h1>
+  <p class="subtitle">Tecnologia, inovação e segurança em um só lugar. Acesse nosso sistema oficial de geração de chaves.</p>
+ </div>
+ <div class="home-stats">
+  <div class="stat"><strong>24H</strong><small>Validade da Key</small></div>
+  <div class="stat"><strong>20S</strong><small>Geração</small></div>
+  <div class="stat"><strong>VTX</strong><small>Official</small></div>
+ </div>
+ <button class="generate-btn" style="margin-top:20px" onclick="openTab('keys',document.querySelectorAll('.nav button')[1])">⚿ ACESSAR KEY SYSTEM</button>
+ <a href="index.html" class="home-link">⌂ VOLTAR AO SITE PRINCIPAL</a>
+</section>
+
+<section class="page active" id="keys">
+ <div class="key-content">
+  <div class="logo">VTX</div>
+  <div class="tag">⚡ VORTEX KEY SYSTEM ONLINE</div>
+  <h1 class="title">Gere sua Key</h1>
+  <p class="subtitle">Clique no botão abaixo para iniciar a geração da sua chave de acesso.</p>
+
+  <div class="loader" id="loader">
+   <div class="loader-head">
+    <div class="loader-icon">⚡</div>
+    <div><div class="loader-title" id="loaderTitle">Sistema aguardando</div><div class="loader-subtitle">Geração segura de acesso VORTEX</div></div>
+   </div>
+   <div class="loader-meta"><span id="loaderPct">0%</span><span id="loaderTime">20 segundos</span></div>
+   <div class="seekbar"><div class="seekbar-fill" id="seekFill"></div></div>
+   <div class="loader-msg" id="loaderMsg">Clique em gerar para iniciar o processo.</div>
+   <div class="steps"><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
   </div>
 
-  <div class="top-actions">
-   <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ White</button>
-  </div>
- </header>
+  <button class="generate-btn" id="generateBtn" onclick="startGeneration()">⚿ &nbsp; GERAR KEY</button>
+  <div class="key-box is-hidden" id="keyDisplay">VTX-XXXXXX</div>
+  <button class="copy-btn is-hidden" id="copyBtn" onclick="copyKey()">⧉ &nbsp; COPIAR KEY</button>
+  <div class="status"><span class="status-dot"></span><span id="systemStatus">Sistema aguardando solicitação</span></div>
+  <div class="validity" id="validity">Sua chave terá validade de 24 horas.</div>
+  <div class="security-note">Proteção de origem • Análise de tráfego • Verificação de IP</div>
+ </div>
 
- <main class="card">
+ <div class="socials">
+  <a class="social-btn" href="https://discord.gg/FEkBTeZ5j" target="_blank" rel="noopener noreferrer">
+   <div class="social-icon">🎮</div><div class="social-text"><strong>PRODUTOS VIP</strong><small>Acessos exclusivos</small></div>
+  </a>
+  <a class="social-btn" href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" rel="noopener noreferrer">
+   <div class="social-icon">💬</div><div class="social-text"><strong>ATUALIZAÇÕES</strong><small>Canal oficial</small></div>
+  </a>
+ </div>
+</section>
 
-  <nav class="nav">
-   <button onclick="openTab('home',this)">⌂ Início</button>
-   <button class="active" onclick="openTab('keys',this)">⚿ Key System</button>
-   <button onclick="openTab('holidays',this)">🎄 Natal & Feriados</button>
-  </nav>
+<section class="page" id="holidays">
+ <div class="section-heading">
+  <div class="tag">🎄 CALENDÁRIO ESPECIAL</div>
+  <h2>Datas comemorativas</h2>
+  <p>Acompanhe quanto falta para cada comemoração.</p>
+ </div>
+ <div class="christmas">
+  <div class="emoji">🎄</div><h3>Contagem regressiva para o Natal</h3>
+  <p>25 de dezembro</p><strong id="christmasCountdown">Calculando...</strong>
+ </div>
+ <div class="holiday-grid" id="holidayGrid"></div>
+</section>
 
-  <!-- INICIO -->
-
-  <section class="page" id="home">
-
-   <div class="home-hero">
-    <div class="logo">VTX</div>
-    <div class="tag">VORTEX OFFICIAL SYSTEM</div>
-    <h1 class="title">Bem-vindo à VORTEX</h1>
-    <p class="subtitle">
-     Tecnologia, inovação e segurança em um só lugar.
-     Acesse nosso sistema oficial de geração de chaves.
-    </p>
-   </div>
-
-   <div class="home-stats">
-    <div class="stat">
-     <strong>24H</strong>
-     <small>Validade da Key</small>
-    </div>
-    <div class="stat">
-     <strong>20S</strong>
-     <small>Geração</small>
-    </div>
-    <div class="stat">
-     <strong>VTX</strong>
-     <small>Official</small>
-    </div>
-   </div>
-
-   <button class="generate-btn" style="margin-top:20px" onclick="openTab('keys',document.querySelectorAll('.nav button')[1])">
-    ⚿ ACESSAR KEY SYSTEM
-   </button>
-
-   <a href="index.html" class="home-link">⌂ VOLTAR AO SITE PRINCIPAL</a>
-
-  </section>
-
-  <!-- KEY SYSTEM -->
-
-  <section class="page active" id="keys">
-
-   <div class="key-content">
-
-    <div class="logo">VTX</div>
-    <div class="tag">⚡ VORTEX KEY SYSTEM ONLINE</div>
-
-    <h1 class="title">Gere sua Key</h1>
-
-    <p class="subtitle">
-     Clique no botão abaixo para iniciar a geração da sua chave de acesso.
-    </p>
-
-    <div class="loader" id="loader">
-
-     <div class="loader-head">
-      <div class="loader-icon">⚡</div>
-      <div>
-       <div class="loader-title" id="loaderTitle">Sistema aguardando</div>
-       <div class="loader-subtitle">Geração segura de acesso VORTEX</div>
-      </div>
-     </div>
-
-     <div class="loader-meta">
-      <span id="loaderPct">0%</span>
-      <span id="loaderTime">20 segundos</span>
-     </div>
-
-     <div class="seekbar">
-      <div class="seekbar-fill" id="seekFill"></div>
-     </div>
-
-     <div class="loader-msg" id="loaderMsg">
-      Clique em gerar para iniciar o processo.
-     </div>
-
-     <div class="steps">
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-      <div class="step-dot"></div>
-     </div>
-
-    </div>
-
-    <button class="generate-btn" id="generateBtn" onclick="startGeneration()">
-     ⚿ &nbsp; GERAR KEY
-    </button>
-
-    <div class="key-box is-hidden" id="keyDisplay">
-     VTX-XXXXXX
-    </div>
-
-    <button class="copy-btn is-hidden" id="copyBtn" onclick="copyKey()">
-     ⧉ &nbsp; COPIAR KEY
-    </button>
-
-    <div class="status">
-     <span class="status-dot"></span>
-     <span id="systemStatus">Sistema aguardando solicitação</span>
-    </div>
-
-    <div class="validity" id="validity">
-     Sua chave terá validade de 24 horas.
-    </div>
-
-   </div>
-
-   <div class="socials">
-
-    <a class="social-btn" href="https://discord.gg/FEkBTeZ5j" target="_blank" rel="noopener noreferrer">
-     <div class="social-icon">🎮</div>
-     <div class="social-text">
-      <strong>PRODUTOS VIP</strong>
-      <small>Acessos exclusivos</small>
-     </div>
-    </a>
-
-    <a class="social-btn" href="https://whatsapp.com/channel/0029Vb8TG8d6rsQq4XOiIa3N" target="_blank" rel="noopener noreferrer">
-     <div class="social-icon">💬</div>
-     <div class="social-text">
-      <strong>ATUALIZAÇÕES</strong>
-      <small>Canal oficial</small>
-     </div>
-    </a>
-
-   </div>
-
-  </section>
-
-  <!-- NATAL E FERIADOS -->
-
-  <section class="page" id="holidays">
-
-   <div class="section-heading">
-    <div class="tag">🎄 CALENDÁRIO ESPECIAL</div>
-    <h2>Datas comemorativas</h2>
-    <p>Acompanhe quanto falta para cada comemoração.</p>
-   </div>
-
-   <div class="christmas">
-    <div class="emoji">🎄</div>
-    <h3>Contagem regressiva para o Natal</h3>
-    <p>25 de dezembro</p>
-    <strong id="christmasCountdown">Calculando...</strong>
-   </div>
-
-   <div class="holiday-grid" id="holidayGrid"></div>
-
-  </section>
-
-  <footer class="footer">
-   VORTEX © 2026 — Todos os direitos reservados.
-   <br>Sistema oficial de geração de chaves.
-  </footer>
-
- </main>
+<footer class="footer">VORTEX © 2026 — Todos os direitos reservados.<br>Sistema oficial de geração de chaves.</footer>
+</main>
 </div>
 
 <script>
+/* CONFIGURAÇÃO */
+const FIREBASE_URL="https://nooxsub-default-rtdb.firebaseio.com";
+const ONE_DAY_MS=24*60*60*1000;
+const SESSION_KEY="vtx_session_v58";
 
-/* ==========================================
-   CONFIGURAÇÃO
-========================================== */
+/*
+  DOMÍNIOS AUTORIZADOS:
+  Incluí o domínio da loja e o GitHub Pages.
+  Se hospedar em outro domínio, adicione o hostname aqui.
+*/
+const ALLOWED_HOSTS=[
+ "vortexsub.shop",
+ "www.vortexsub.shop",
+ "ffvortex20-lgtm.github.io"
+];
 
-const FIREBASE_URL = "https://nooxsub-default-rtdb.firebaseio.com";
-const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-const SESSION_KEY = "vtx_session_v58";
+/* CONTROLES */
+let activeKey="";
+let activeExpire=0;
+let activeTimer=null;
+let generating=false;
+let audioCtx=null;
 
-let activeKey = "";
-let activeExpire = 0;
-let activeTimer = null;
-let generating = false;
-let audioCtx = null;
-
-/* ==========================================
-   NAVEGAÇÃO
-========================================== */
-
+/* NAVEGAÇÃO */
 function openTab(name,button){
-
- document.querySelectorAll(".page").forEach(p=>{
-  p.classList.remove("active");
- });
-
- document.querySelectorAll(".nav button").forEach(b=>{
-  b.classList.remove("active");
- });
-
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
  const page=document.getElementById(name);
-
- if(page) page.classList.add("active");
-
- if(button && button.classList.contains("nav-button")){
-  button.classList.add("active");
- }
-
- if(button && button.parentElement.classList.contains("nav")){
-  button.classList.add("active");
- }
-
+ if(page)page.classList.add("active");
+ if(button && button.parentElement.classList.contains("nav"))button.classList.add("active");
  sound("click");
  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-/* ==========================================
-   TEMA DARK / WHITE
-========================================== */
-
+/* TEMA */
 function applyTheme(theme){
-
  document.body.classList.toggle("light",theme==="light");
-
- document.getElementById("themeBtn").textContent=
- theme==="light"?"🌙 Dark":"☀️ White";
-
- document.querySelector('meta[name="theme-color"]').content=
- theme==="light"?"#f1f2f6":"#08080b";
-
+ document.getElementById("themeBall").textContent=theme==="light"?"☀️":"🌙";
+ document.querySelector('meta[name="theme-color"]').content=theme==="light"?"#f1f2f6":"#08080b";
  localStorage.setItem("vtx_theme",theme);
 }
-
 function toggleTheme(){
-
- const current=document.body.classList.contains("light")?"light":"dark";
-
- applyTheme(current==="dark"?"light":"dark");
+ applyTheme(document.body.classList.contains("light")?"dark":"light");
  sound("click");
 }
-
 applyTheme(localStorage.getItem("vtx_theme")||"dark");
 
-/* ==========================================
-   NEVE
-========================================== */
-
+/* NEVE */
 const particles=document.getElementById("particles");
-
 for(let i=0;i<(innerWidth<600?20:35);i++){
-
  const p=document.createElement("div");
  p.className="particle";
-
  const size=1+Math.random()*2.2;
-
  p.style.left=Math.random()*100+"%";
- p.style.width=size+"px";
- p.style.height=size+"px";
+ p.style.width=size+"px";p.style.height=size+"px";
  p.style.opacity=.15+Math.random()*.4;
  p.style.animationDuration=(9+Math.random()*13)+"s";
  p.style.animationDelay=(-Math.random()*20)+"s";
-
  particles.appendChild(p);
 }
 
-/* ==========================================
-   SONS
-========================================== */
-
+/* SONS */
 function sound(type){
-
  try{
-
-  if(!audioCtx){
-   audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  }
-
-  if(audioCtx.state==="suspended") audioCtx.resume();
-
-  const ctx=audioCtx;
-  const now=ctx.currentTime;
-
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==="suspended")audioCtx.resume();
+  const ctx=audioCtx,now=ctx.currentTime;
   function tone(freq,duration,volume){
-
-   const osc=ctx.createOscillator();
-   const gain=ctx.createGain();
-
-   osc.type="sine";
-   osc.frequency.value=freq;
-
+   const osc=ctx.createOscillator(),gain=ctx.createGain();
+   osc.type="sine";osc.frequency.value=freq;
    gain.gain.setValueAtTime(.0001,now);
    gain.gain.exponentialRampToValueAtTime(volume,now+.01);
    gain.gain.exponentialRampToValueAtTime(.0001,now+duration);
-
-   osc.connect(gain);
-   gain.connect(ctx.destination);
-
-   osc.start(now);
-   osc.stop(now+duration+.02);
+   osc.connect(gain);gain.connect(ctx.destination);
+   osc.start(now);osc.stop(now+duration+.02);
   }
-
-  if(type==="click") tone(720,.07,.045);
-
-  if(type==="success"){
-   [523,659,784,1046].forEach((f,i)=>{
-    setTimeout(()=>tone(f,.3,.055),i*100);
-   });
-  }
-
+  if(type==="click")tone(720,.07,.045);
+  if(type==="success")[523,659,784,1046].forEach((f,i)=>setTimeout(()=>tone(f,.3,.055),i*100));
  }catch(e){}
 }
+document.addEventListener("click",e=>{if(e.target.closest("button"))sound("click")});
 
-document.addEventListener("click",e=>{
- if(e.target.closest("button")) sound("click");
-});
+/* PROTEÇÃO 1: ATALHOS E MENU DE CONTEXTO
+   Isto dificulta a inspeção casual, mas não impede DevTools
+   aberto por outros meios nem acesso ao código-fonte.
+*/
+document.addEventListener("contextmenu",e=>e.preventDefault());
+document.addEventListener("keydown",e=>{
+ const key=e.key.toLowerCase();
+ const blocked=
+  e.key==="F12" ||
+  (e.ctrlKey && e.shiftKey && ["i","j","c"].includes(key)) ||
+  (e.ctrlKey && ["u","s"].includes(key));
 
-/* ==========================================
-   DATAS E FERIADOS BRASILEIROS
-========================================== */
+ if(blocked){
+  e.preventDefault();
+  e.stopPropagation();
+  showSecurityMessage("Atalho bloqueado pelo sistema de proteção VORTEX.");
+ }
+},true);
 
-function easterDate(year){
-
- const a=year%19;
- const b=Math.floor(year/100);
- const c=year%100;
- const d=Math.floor(b/4);
- const e=b%4;
- const f=Math.floor((b+8)/25);
- const g=Math.floor((b-f+1)/3);
- const h=(19*a+b-d-g+15)%30;
- const i=Math.floor(c/4);
- const k=c%4;
- const l=(32+2*e+2*i-h-k)%7;
- const m=Math.floor((a+11*h+22*l)/451);
- const month=Math.floor((h+l-7*m+114)/31);
- const day=((h+l-7*m+114)%31)+1;
-
- return new Date(year,month-1,day);
+function showSecurityMessage(message){
+ const msg=document.getElementById("loaderMsg");
+ if(msg)msg.textContent=message;
 }
 
-function addDays(date,days){
- const d=new Date(date);
- d.setDate(d.getDate()+days);
- return d;
-}
+/* PROTEÇÃO 2: ORIGEM / DOMÍNIO */
+function verifyPageOrigin(){
+ const host=location.hostname.toLowerCase();
 
-function nthWeekday(year,month,weekday,n){
-
- const d=new Date(year,month,1);
- const offset=(weekday-d.getDay()+7)%7;
-
- d.setDate(1+offset+(n-1)*7);
- return d;
-}
-
-function nextOccurrence(month,day){
-
- const now=new Date();
- let date=new Date(now.getFullYear(),month-1,day);
-
- date.setHours(0,0,0,0);
-
- if(date<new Date(new Date().setHours(0,0,0,0))){
-  date=new Date(now.getFullYear()+1,month-1,day);
+ if(location.protocol!=="https:" && host!=="localhost"){
+  throw new Error("Acesso bloqueado: conexão HTTPS obrigatória.");
  }
 
- return date;
+ if(!ALLOWED_HOSTS.includes(host)){
+  throw new Error("Origem não autorizada. Acesse pelo site oficial da VORTEX.");
+ }
+
+ /*
+  Referer vazio é permitido porque navegadores e políticas de
+  privacidade podem removê-lo. Quando existe, precisa ser do
+  mesmo domínio atual.
+ */
+ if(document.referrer){
+  try{
+   const refHost=new URL(document.referrer).hostname.toLowerCase();
+   if(refHost!==host){
+    throw new Error("Acesso externo não autorizado. Entre pelo site oficial.");
+   }
+  }catch(err){
+   if(err.message.includes("Acesso externo"))throw err;
+  }
+ }
+ return true;
 }
 
+/* FIREBASE */
+async function firebaseRequest(path,options={}){
+ const response=await fetch(FIREBASE_URL+"/"+path+".json",{
+  ...options,
+  headers:{"Content-Type":"application/json",...options.headers}
+ });
+ if(!response.ok)throw new Error("Erro Firebase: "+response.status);
+ return response.json();
+}
+
+function safeIP(ip){
+ return ip.replace(/[.#$/\[\]]/g,"_");
+}
+
+async function getUserIP(){
+ const response=await fetch("https://api.ipify.org?format=json",{cache:"no-store"});
+ if(!response.ok)throw new Error("Não foi possível identificar o IP.");
+ const data=await response.json();
+ if(!data.ip)throw new Error("IP não identificado.");
+ return {ip:data.ip,ipSafe:safeIP(data.ip)};
+}
+
+/* PROTEÇÃO 3: ANÁLISE DE VPN / PROXY / TOR / HOSTING */
+async function checkNetwork(ip){
+ let response;
+ try{
+  response=await fetch("https://ipwho.is/"+encodeURIComponent(ip)+"?security=1",{cache:"no-store"});
+ }catch(e){
+  throw new Error("Não foi possível verificar a rede. Tente novamente.");
+ }
+
+ if(!response.ok)throw new Error("Serviço de análise de rede indisponível.");
+
+ const data=await response.json();
+ if(!data.success)throw new Error("Não foi possível analisar o endereço IP.");
+
+ const security=data.security||{};
+ const flags={
+  vpn:security.vpn===true,
+  proxy:security.proxy===true,
+  tor:security.tor===true,
+  hosting:security.hosting===true
+ };
+
+ return {
+  data,
+  flags,
+  blocked:flags.vpn||flags.proxy||flags.tor||flags.hosting
+ };
+}
+
+/* PROTEÇÃO 4: REGISTRO DE TRÁFEGO */
+async function registerTraffic(ip,network){
+ const data=network.data||{};
+ const browser=navigator.userAgent||"Desconhecido";
+ const now=Date.now();
+
+ const record={
+  ip:ip,
+  country:data.country||"Desconhecido",
+  countryCode:data.country_code||"",
+  city:data.city||"Desconhecido",
+  isp:data.connection?.isp||data.connection?.org||"Desconhecido",
+  browser:browser,
+  origin:location.origin,
+  page:location.href,
+  referrer:document.referrer||"Acesso direto/sem referência",
+  vpn:network.flags.vpn,
+  proxy:network.flags.proxy,
+  tor:network.flags.tor,
+  hosting:network.flags.hosting,
+  timestamp:now,
+  date:new Date(now).toISOString()
+ };
+
+ /*
+  Cada acesso gera um registro separado em trafego.
+  O Firebase retorna uma chave única para cada evento.
+ */
+ await firebaseRequest("trafego.json",{
+  method:"POST",
+  body:JSON.stringify(record)
+ });
+}
+
+/* DATAS E FERIADOS BRASILEIROS */
+function easterDate(year){
+ const a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4;
+ const f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3);
+ const h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4;
+ const l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451);
+ const month=Math.floor((h+l-7*m+114)/31);
+ const day=((h+l-7*m+114)%31)+1;
+ return new Date(year,month-1,day);
+}
+function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
+function nthWeekday(year,month,weekday,n){
+ const d=new Date(year,month,1),offset=(weekday-d.getDay()+7)%7;
+ d.setDate(1+offset+(n-1)*7);return d;
+}
 function getHolidayDates(year){
-
  const easter=easterDate(year);
-
  return [
-
   {name:"Ano Novo",emoji:"🎆",date:new Date(year,0,1)},
   {name:"Carnaval",emoji:"🎭",date:addDays(easter,-47)},
   {name:"Sexta-feira Santa",emoji:"✝️",date:addDays(easter,-2)},
@@ -896,154 +485,60 @@ function getHolidayDates(year){
   {name:"Proclamação da República",emoji:"🇧🇷",date:new Date(year,10,15)},
   {name:"Consciência Negra",emoji:"✊🏿",date:new Date(year,10,20)},
   {name:"Natal",emoji:"🎄",date:new Date(year,11,25)}
-
  ];
 }
-
-function nextHoliday(name,emoji,month,day){
-
- const now=new Date();
- let date=new Date(now.getFullYear(),month-1,day);
-
+function nextOccurrence(month,day){
+ const now=new Date();let date=new Date(now.getFullYear(),month-1,day);
  date.setHours(0,0,0,0);
-
- if(date<new Date(now.getFullYear(),now.getMonth(),now.getDate())){
-  date=new Date(now.getFullYear()+1,month-1,day);
- }
-
- return {name,emoji,date};
+ if(date<new Date(new Date().setHours(0,0,0,0)))date=new Date(now.getFullYear()+1,month-1,day);
+ return date;
 }
-
 function getNextHolidays(){
-
- const now=new Date();
- const year=now.getFullYear();
-
- let all=[
-  ...getHolidayDates(year),
-  ...getHolidayDates(year+1)
- ];
-
+ const now=new Date(),year=now.getFullYear();
+ let all=[...getHolidayDates(year),...getHolidayDates(year+1)];
  all=all.filter(h=>h.date>=new Date(year,now.getMonth(),now.getDate()));
-
  all.sort((a,b)=>a.date-b.date);
-
  return all.slice(0,12);
 }
-
 function formatCountdown(date){
-
  const diff=date.getTime()-Date.now();
-
- if(diff<=0) return "É hoje! 🎉";
-
- const days=Math.floor(diff/86400000);
- const hours=Math.floor(diff%86400000/3600000);
- const mins=Math.floor(diff%3600000/60000);
- const secs=Math.floor(diff%60000/1000);
-
+ if(diff<=0)return "É hoje! 🎉";
+ const days=Math.floor(diff/86400000),hours=Math.floor(diff%86400000/3600000);
+ const mins=Math.floor(diff%3600000/60000),secs=Math.floor(diff%60000/1000);
  return `${days}d ${hours}h ${mins}m ${secs}s`;
 }
-
 function updateHolidays(){
-
- const christmas=nextOccurrence(12,25);
-
- document.getElementById("christmasCountdown").textContent=
- formatCountdown(christmas);
-
+ document.getElementById("christmasCountdown").textContent=formatCountdown(nextOccurrence(12,25));
  const list=getNextHolidays();
-
  document.getElementById("holidayGrid").innerHTML=list.map(h=>`
-
   <div class="holiday">
    <div class="holiday-icon">${h.emoji}</div>
    <div class="holiday-name">${h.name}</div>
    <div class="holiday-date">${h.date.toLocaleDateString("pt-BR")}</div>
-   <div class="holiday-count" data-date="${h.date.getTime()}">
-    ${formatCountdown(h.date)}
-   </div>
-  </div>
-
- `).join("");
-
+   <div class="holiday-count" data-date="${h.date.getTime()}">${formatCountdown(h.date)}</div>
+  </div>`).join("");
 }
-
 function tickHolidays(){
-
- const christmas=nextOccurrence(12,25);
- document.getElementById("christmasCountdown").textContent=
- formatCountdown(christmas);
-
- document.querySelectorAll(".holiday-count").forEach(el=>{
-  el.textContent=formatCountdown(new Date(Number(el.dataset.date)));
- });
-
+ document.getElementById("christmasCountdown").textContent=formatCountdown(nextOccurrence(12,25));
+ document.querySelectorAll(".holiday-count").forEach(el=>el.textContent=formatCountdown(new Date(Number(el.dataset.date))));
 }
-
 updateHolidays();
 setInterval(tickHolidays,1000);
 
-/* ==========================================
-   SISTEMA FIREBASE
-========================================== */
-
+/* GERAÇÃO DE KEY */
 function generateUID(){
-
  return "UID_"+crypto.randomUUID().replace(/-/g,"").slice(0,12);
 }
-
 function generateKey(){
-
  const chars="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
  const values=new Uint32Array(6);
  crypto.getRandomValues(values);
-
  let part="";
-
- for(let i=0;i<6;i++){
-  part+=chars[values[i]%chars.length];
- }
-
+ for(let i=0;i<6;i++)part+=chars[values[i]%chars.length];
  return "VTX-"+part;
 }
 
-async function firebaseRequest(path,options={}){
-
- const response=await fetch(FIREBASE_URL+"/"+path+".json",{
-  ...options,
-  headers:{
-   "Content-Type":"application/json",
-   ...options.headers
-  }
- });
-
- if(!response.ok){
-  throw new Error("Erro Firebase: "+response.status);
- }
-
- return response.json();
-}
-
-async function getUserIP(){
-
- const response=await fetch("https://api.ipify.org?format=json",{
-  cache:"no-store"
- });
-
- if(!response.ok) throw new Error("Não foi possível identificar o IP.");
-
- const data=await response.json();
-
- if(!data.ip) throw new Error("IP não identificado.");
-
- return data.ip.replace(/[.#$[\]/]/g,"_");
-}
-
-/* ==========================================
-   PROGRESSO
-========================================== */
-
+/* PROGRESSO */
 const stages=[
  "Conectando ao servidor...",
  "Verificando endereço IP...",
@@ -1051,61 +546,32 @@ const stages=[
  "Enviando ao banco de dados...",
  "Validando registro..."
 ];
-
 function setProgress(percent,message){
-
  document.getElementById("loaderPct").textContent=percent+"%";
  document.getElementById("seekFill").style.width=percent+"%";
  document.getElementById("loaderMsg").textContent=message;
-
  const index=Math.min(4,Math.floor(percent/20));
-
- document.querySelectorAll(".step-dot").forEach((dot,i)=>{
-  dot.classList.toggle("done",i<=index && percent>0);
- });
+ document.querySelectorAll(".step-dot").forEach((dot,i)=>dot.classList.toggle("done",i<=index&&percent>0));
 }
-
-function sleep(ms){
- return new Promise(resolve=>setTimeout(resolve,ms));
-}
-
+function sleep(ms){return new Promise(resolve=>setTimeout(resolve,ms))}
 async function runStage(index,callback){
-
- document.getElementById("loaderTitle").textContent=
- stages[index];
-
- const start=Date.now();
- const duration=4000;
-
+ document.getElementById("loaderTitle").textContent=stages[index];
+ const start=Date.now(),duration=4000;
  while(Date.now()-start<duration){
-
-  const elapsed=Date.now()-start;
-  const local=Math.min(1,elapsed/duration);
+  const elapsed=Date.now()-start,local=Math.min(1,elapsed/duration);
   const percent=Math.floor(index*20+local*20);
-
   setProgress(percent,stages[index]);
-
   const remaining=Math.max(0,20-Math.floor((index*4000+elapsed)/1000));
-
-  document.getElementById("loaderTime").textContent=
-  remaining+" segundos";
-
+  document.getElementById("loaderTime").textContent=remaining+" segundos";
   await sleep(100);
  }
-
- if(callback) await callback();
-
+ if(callback)await callback();
  setProgress((index+1)*20,stages[index]);
 }
 
-/* ==========================================
-   GERAR KEY
-========================================== */
-
+/* PROCESSO PRINCIPAL */
 async function startGeneration(){
-
- if(generating) return;
-
+ if(generating)return;
  generating=true;
 
  const button=document.getElementById("generateBtn");
@@ -1117,213 +583,138 @@ async function startGeneration(){
  keyBox.classList.add("is-hidden");
  copyBtn.classList.add("is-hidden");
 
- document.getElementById("systemStatus").textContent=
- "Verificando solicitação...";
+ document.getElementById("systemStatus").textContent="Verificando solicitação...";
+ document.getElementById("validity").textContent="Aguarde enquanto o sistema processa sua solicitação.";
+ setProgress(0,"Iniciando verificações de segurança...");
 
- document.getElementById("validity").textContent=
- "Aguarde enquanto o sistema processa sua solicitação.";
-
- setProgress(0,"Iniciando sistema...");
-
- let ipSafe="";
- let newKey="";
- let uid="";
- let expireTime=0;
- let existing=null;
+ let ip="",ipSafe="",newKey="",uid="",expireTime=0,existing=null,network=null;
 
  try{
+  /* ORIGEM */
+  verifyPageOrigin();
 
-  /* ETAPA 1 - CONEXÃO */
-
+  /* ETAPA 1: CONEXÃO */
   await runStage(0,async()=>{
-
    const test=await fetch(FIREBASE_URL+"/.json?shallow=true");
-
-   if(!test.ok) throw new Error("Banco de dados indisponível.");
-
+   if(!test.ok)throw new Error("Banco de dados indisponível.");
   });
 
-  /* ETAPA 2 - IP */
-
+  /* ETAPA 2: IP + VPN + REGISTRO DE TRÁFEGO */
   await runStage(1,async()=>{
+   const ipData=await getUserIP();
+   ip=ipData.ip;
+   ipSafe=ipData.ipSafe;
 
-   ipSafe=await getUserIP();
+   network=await checkNetwork(ip);
 
-   existing=await firebaseRequest(
-    "visitas/ips/"+ipSafe
-   );
-
-   if(existing && existing.expireTime>Date.now()){
-
-    newKey=existing.key;
-    expireTime=existing.expireTime;
-
+   /* Registra tentativa mesmo quando a rede for suspeita. */
+   try{await registerTraffic(ip,network)}catch(logError){
+    console.warn("Não foi possível registrar o tráfego:",logError);
    }
 
+   if(network.blocked){
+    const reasons=[];
+    if(network.flags.vpn)reasons.push("VPN");
+    if(network.flags.proxy)reasons.push("Proxy");
+    if(network.flags.tor)reasons.push("Tor");
+    if(network.flags.hosting)reasons.push("Datacenter/Hospedagem");
+    throw new Error("Acesso bloqueado: rede identificada como "+reasons.join(", ")+". Desative VPN ou proxy e tente novamente.");
+   }
+
+   existing=await firebaseRequest("visitas/ips/"+ipSafe);
+
+   /*
+    O IP precisa ter sido cadastrado previamente pelo encurtador.
+    Não criamos automaticamente um registro novo aqui.
+   */
+   if(!existing||!existing.key||!existing.expireTime||existing.expireTime<=Date.now()){
+    throw new Error("Não foi possível gerar a key, possível burlação de sistema, passe pelo encurtador novamente para gerar uma nova key!");
+   }
+
+   newKey=existing.key;
+   expireTime=Number(existing.expireTime);
+   uid=existing.uid||"";
   });
 
-  /* ETAPA 3 - GERAÇÃO */
-
+  /* ETAPA 3: CONFERIR CHAVE */
   await runStage(2,async()=>{
-
-   if(!newKey){
-
-    newKey=generateKey();
-    uid=generateUID();
-    expireTime=Date.now()+ONE_DAY_MS;
-
+   if(!/^VTX-[A-Z0-9]{6}$/.test(newKey)){
+    throw new Error("Registro de key inválido. Passe pelo encurtador novamente.");
    }
-
   });
 
-  /* ETAPA 4 - ENVIO */
-
+  /* ETAPA 4: CONSULTA DO REGISTRO */
   await runStage(3,async()=>{
-
-   if(existing && existing.expireTime>Date.now()){
-
-    return;
-
+   if(uid){
+    const user=await firebaseRequest("usuariosT/"+uid);
+    if(!user||user.key!==newKey||user.expireTime<=Date.now()){
+     throw new Error("A chave não corresponde ao registro de usuário.");
+    }
    }
-
-   const userData={
-    key:newKey,
-    status:"ativada",
-    uid:uid,
-    criador:"AUTO_GENERATOR",
-    ip:ipSafe,
-    expireTime:expireTime,
-    createdAt:Date.now()
-   };
-
-   await firebaseRequest("usuariosT/"+uid,{
-    method:"PUT",
-    body:JSON.stringify(userData)
-   });
-
-   await firebaseRequest("visitas/ips/"+ipSafe,{
-    method:"PUT",
-    body:JSON.stringify({
-     key:newKey,
-     uid:uid,
-     expireTime:expireTime,
-     createdAt:Date.now()
-    })
-   });
-
   });
 
-  /* ETAPA 5 - VALIDAÇÃO */
-
+  /* ETAPA 5: VALIDAÇÃO FINAL */
   await runStage(4,async()=>{
-
-   const check=await firebaseRequest(
-    "visitas/ips/"+ipSafe
-   );
-
-   if(!check || check.key!==newKey){
+   const check=await firebaseRequest("visitas/ips/"+ipSafe);
+   if(!check||check.key!==newKey||Number(check.expireTime)<=Date.now()){
     throw new Error("Falha ao validar a chave no banco.");
    }
-
-   if(check.expireTime<=Date.now()){
-    throw new Error("A validade da chave é inválida.");
-   }
-
   });
-
-  /* CONCLUIDO */
 
   activeKey=newKey;
   activeExpire=expireTime;
 
-  localStorage.setItem(SESSION_KEY,JSON.stringify({
-   key:newKey,
-   expireTime:expireTime
-  }));
+  localStorage.setItem(SESSION_KEY,JSON.stringify({key:newKey,expireTime:expireTime}));
 
   keyBox.textContent=newKey;
   keyBox.classList.remove("is-hidden");
-
   copyBtn.classList.remove("is-hidden");
 
-  button.textContent="✓ KEY GERADA";
-
-  document.getElementById("loaderTitle").textContent=
-  "Geração concluída!";
-
+  button.textContent="✓ KEY DISPONÍVEL";
+  document.getElementById("loaderTitle").textContent="Geração concluída!";
   document.getElementById("loaderTime").textContent="Concluído";
+  document.getElementById("loaderMsg").textContent="Sua chave foi validada e registrada com sucesso.";
+  document.getElementById("systemStatus").textContent="Key validada • Acesso autorizado";
 
-  document.getElementById("loaderMsg").textContent=
-  "Sua chave foi validada e registrada com sucesso.";
-
-  document.getElementById("systemStatus").textContent=
-  "Key gerada e validada";
-
-  updateValidity();
-
+  startValidityTimer();
   sound("success");
 
  }catch(error){
-
   console.error(error);
-
-  document.getElementById("loaderTitle").textContent=
-  "Não foi possível gerar";
-
-  document.getElementById("loaderMsg").textContent=
-  error.message||"Erro ao conectar ao servidor.";
-
-  document.getElementById("systemStatus").textContent=
-  "Falha na geração";
-
-  document.getElementById("validity").textContent=
-  "Verifique sua conexão e tente novamente.";
-
-  document.getElementById("loaderTime").textContent="Erro";
-
-  button.textContent="↻ TENTAR NOVAMENTE";
-
- }finally{
-
-  generating=false;
-  button.disabled=false;
-
- }
-
-}
-
-/* ==========================================
-   VALIDADE
-========================================== */
-
-function updateValidity(){
-
- if(!activeExpire) return;
-
- const distance=activeExpire-Date.now();
-
- if(distance<=0){
-
   activeKey="";
   activeExpire=0;
 
-  localStorage.removeItem(SESSION_KEY);
+  keyBox.classList.add("is-hidden");
+  copyBtn.classList.add("is-hidden");
 
+  document.getElementById("loaderTitle").textContent="Verificação bloqueada";
+  document.getElementById("loaderMsg").textContent=error.message||"Erro ao conectar ao servidor.";
+  document.getElementById("systemStatus").textContent="Acesso não autorizado";
+  document.getElementById("validity").textContent="Corrija o problema e tente novamente.";
+  document.getElementById("loaderTime").textContent="Bloqueado";
+  button.textContent="↻ TENTAR NOVAMENTE";
+
+ }finally{
+  generating=false;
+  button.disabled=false;
+ }
+}
+
+/* VALIDADE */
+function updateValidity(){
+ if(!activeExpire)return;
+ const distance=activeExpire-Date.now();
+
+ if(distance<=0){
+  activeKey="";activeExpire=0;
+  localStorage.removeItem(SESSION_KEY);
   document.getElementById("keyDisplay").classList.add("is-hidden");
   document.getElementById("copyBtn").classList.add("is-hidden");
-
-  document.getElementById("validity").textContent=
-  "Sua key expirou. Gere uma nova chave.";
-
-  document.getElementById("systemStatus").textContent=
-  "Key expirada";
-
-  document.getElementById("generateBtn").textContent=
-  "⚿ GERAR NOVA KEY";
-
+  document.getElementById("validity").textContent="Sua key expirou. Gere uma nova chave.";
+  document.getElementById("systemStatus").textContent="Key expirada";
+  document.getElementById("generateBtn").textContent="⚿ GERAR NOVA KEY";
   clearInterval(activeTimer);
   return;
-
  }
 
  const hours=Math.floor(distance/3600000);
@@ -1331,115 +722,55 @@ function updateValidity(){
  const seconds=Math.floor(distance%60000/1000);
 
  document.getElementById("validity").innerHTML=
- `Validade: <b>24 horas</b><br>
- Expira em: <b>${hours}h ${minutes}m ${seconds}s</b>`;
+ `Validade: <b>24 horas</b><br>Expira em: <b>${hours}h ${minutes}m ${seconds}s</b>`;
 }
-
 function startValidityTimer(){
-
- if(activeTimer) clearInterval(activeTimer);
-
+ if(activeTimer)clearInterval(activeTimer);
  updateValidity();
  activeTimer=setInterval(updateValidity,1000);
-
 }
 
-/* ==========================================
-   RECUPERAR SESSÃO
-========================================== */
-
+/*
+  Não exibimos uma key salva apenas pelo localStorage.
+  A chave precisa ser consultada novamente no Firebase ao clicar
+  em GERAR KEY, para não ignorar a verificação de IP.
+*/
 function restoreSession(){
-
  try{
-
-  const saved=JSON.parse(
-   localStorage.getItem(SESSION_KEY)||"null"
-  );
-
-  if(!saved || !saved.key || !saved.expireTime) return;
-
-  if(saved.expireTime<=Date.now()){
+  const saved=JSON.parse(localStorage.getItem(SESSION_KEY)||"null");
+  if(!saved||!saved.expireTime||saved.expireTime<=Date.now()){
    localStorage.removeItem(SESSION_KEY);
-   return;
   }
-
-  activeKey=saved.key;
-  activeExpire=saved.expireTime;
-
-  document.getElementById("keyDisplay").textContent=activeKey;
-  document.getElementById("keyDisplay").classList.remove("is-hidden");
-
-  document.getElementById("copyBtn").classList.remove("is-hidden");
-
-  document.getElementById("generateBtn").textContent=
-  "✓ KEY DISPONÍVEL";
-
-  document.getElementById("loaderTitle").textContent=
-  "Sessão recuperada";
-
-  setProgress(100,"Sua chave já está disponível.");
-
-  document.getElementById("loaderTime").textContent="Concluído";
-
-  document.getElementById("systemStatus").textContent=
-  "Sessão recuperada";
-
-  startValidityTimer();
-
  }catch(e){
-
   localStorage.removeItem(SESSION_KEY);
-
  }
-
 }
 
-/* ==========================================
-   COPIAR KEY
-========================================== */
-
+/* COPIAR KEY */
 async function copyKey(){
-
- if(!activeKey) return;
-
+ if(!activeKey)return;
  try{
-
   await navigator.clipboard.writeText(activeKey);
-
  }catch(e){
-
   const area=document.createElement("textarea");
   area.value=activeKey;
   document.body.appendChild(area);
   area.select();
   document.execCommand("copy");
   area.remove();
-
  }
-
  const button=document.getElementById("copyBtn");
-
  button.textContent="✓ KEY COPIADA!";
  button.classList.add("success");
-
  sound("success");
-
  setTimeout(()=>{
-
   button.textContent="⧉ COPIAR KEY";
   button.classList.remove("success");
-
  },2200);
-
 }
 
-/* ==========================================
-   INICIALIZAÇÃO
-========================================== */
-
+/* INICIALIZAÇÃO */
 restoreSession();
-
 </script>
-
 </body>
 </html>
